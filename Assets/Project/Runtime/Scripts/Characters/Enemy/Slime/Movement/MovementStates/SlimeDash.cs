@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Data.Common;
 using UnityEngine;
 
 public class SlimeDash : SlimeMovementBase
@@ -9,13 +10,14 @@ public class SlimeDash : SlimeMovementBase
     public List<Collider> collidersToDamage;
     private float dashTime;
 
-
-    public override void OnEnter(StateMachine _stateMachine)
+    public SlimeDash(Slime_Data data) : base(data)
     {
-        base.OnEnter(_stateMachine);
+    }
 
-        BaseUpdate();
-        movementDirection = directionToPlayer.normalized;
+    public override void OnEnter()
+    {
+        base.OnEnter();
+        movementDirection = data.directionToPlayer.normalized;
         adjustFlipSprite();
         animator.SetTrigger("Dash");
         warmUp = 0.4f;
@@ -27,20 +29,15 @@ public class SlimeDash : SlimeMovementBase
     public override void OnFixedHandle()
     {
         base.OnFixedHandle();
-        if (warmUp > 0)
-        {
-            warmUp -= Time.fixedDeltaTime;
-        }
-        else if (dashTime > 0)
+        if (time > warmUp)
         {
             animator.SetBool("isDashing", true);
             TryDash(movementDirection);
-            dashTime -= Time.fixedDeltaTime;
         }
-        else
+        else if (time >= warmUp + dashTime)
         {
             animator.SetBool("isDashing", false);
-            stateMachine.SetNextState(new SlimeChase());
+            data.dashCD = data.defaultDashCD;
         }
     }
 
@@ -55,7 +52,7 @@ public class SlimeDash : SlimeMovementBase
         for (int i = 0; i < collidersToDamage.Count; i++)
         {
             Debug.Log("Collider is " + collidersToDamage[i].name);
-            if(collidersToDamage[i].CompareTag("LivingBody"))
+            if (collidersToDamage[i].CompareTag("LivingBody"))
                 InflictDamage(collidersToDamage[i]);
         }
     }
@@ -63,7 +60,7 @@ public class SlimeDash : SlimeMovementBase
     public virtual void InflictDamage(Collider targetCollider)
     {
         Controller target = targetCollider.GetComponentInParent<Controller>();
-        if(target == null || targetDamaged.Contains(target)) return;
+        if (target == null || targetDamaged.Contains(target)) return;
         TeamComponent hitTeamComponent = target.teamComponent;
         if (hitTeamComponent && hitTeamComponent.teamIndex == TeamIndex.Enemy)
         {

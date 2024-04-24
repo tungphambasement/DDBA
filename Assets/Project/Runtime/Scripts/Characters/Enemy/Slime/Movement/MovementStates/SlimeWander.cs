@@ -3,9 +3,13 @@ using UnityEngine;
 
 public class SlimeWander : SlimeMovementBase
 {
-    public override void OnEnter(StateMachine _stateMachine)
+    public SlimeWander(Slime_Data data) : base(data)
     {
-        base.OnEnter(_stateMachine);
+    }
+
+    public override void OnEnter()
+    {
+        base.OnEnter();
         randomizeWander();
     }
 
@@ -18,17 +22,10 @@ public class SlimeWander : SlimeMovementBase
     public override void OnFixedHandle()
     {
         base.OnFixedHandle();
-        duration -= Time.fixedDeltaTime;
-        if (sqrDistance < Mathf.Pow(chaseDistanceThreshold,2))
-        {
-            stateMachine.SetNextState(new SlimeChase());
-        }
-        if (duration <= 0)
-        {                   
-            revertToIdle();
-            
-        }
         SlideMove(movementDirection);
-        
+        if (time >= duration)
+        {                   
+            data.idx = 1-data.idx;
+        }
     }
 }

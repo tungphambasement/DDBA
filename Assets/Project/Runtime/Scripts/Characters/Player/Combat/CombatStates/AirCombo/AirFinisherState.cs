@@ -4,15 +4,15 @@ using UnityEngine;
 public class AirFinisherState : MeleeBaseState
 {
 
-    public override void OnEnter(StateMachine _stateMachine)
+    public override void OnEnter()
     {
         attackIndex = 3;
         animation_name = "AirAttack" + attackIndex;
-        base.OnEnter(_stateMachine);
+        base.OnEnter();
         data.StartCoroutine(PlayAnimation());
         //Attack
         Debug.Log("Player Air Attack " + attackIndex + " Fired!");
-        data.customGravity.gravityScale = 8f;
+        data.customGravity.gravityScale *= 2;
     }
 
     private IEnumerator PlayAnimation(){
@@ -29,10 +29,11 @@ public class AirFinisherState : MeleeBaseState
     public override void OnHandle()
     {
         base.OnHandle();
-        if (data.groundChecker.isGrounded())
-        {
-            data.customGravity.gravityScale /=2;
-            stateMachine.SetNextStateToMain();
-        }
+    }
+
+    public override void OnExit()
+    {
+        base.OnExit();
+        data.customGravity.gravityScale /=2;
     }
 }

@@ -1,27 +1,23 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class StateMachine : MonoBehaviour
+public class StateMachine<T> where T : State
 {
     public string customName;
-    public State mainStateType;
-    public State CurrentState { get; private set; }
-    private State nextState;
-    public Controller controller;
+    public T mainStateType;
+    public T CurrentState { get; private set; }
+    private T nextState;
+    public Dictionary<T, List<Transition<T>>> stateTransitions;
 
-    private void Awake()
+    public void Init()
     {
-        SetController(GetComponent<Controller>());
-    
         OnValidate();
+        stateTransitions = new();
         CurrentState = mainStateType;
         SetNextStateToMain();
     }
 
-    private void SetController(Controller _controller)
-    {
-        controller = _controller;
-    }
 
     public void SetNextStateToMain()
     {
@@ -34,8 +30,21 @@ public class StateMachine : MonoBehaviour
         {
         }
     }
+    
+    private void CheckTransitions(){
+        if(CurrentState == null || !stateTransitions.ContainsKey(CurrentState)) return;
+        List<Transition<T>> transitions = stateTransitions[CurrentState];
+        if(transitions == null) return;
+        foreach(Transition<T> transition in transitions){
+            //Debug.Log(CurrentState + " " + transition.Condition + " " + transition.Condition()+  " "+ transition.nextState);
+            if(transition.Condition()){
+                nextState = transition.nextState;
+                break;
+            }
+        }
+    }
 
-    public void SetNextState(State _newState)
+    public void SetNextState(T _newState)
     {
         if (_newState != null)
         {
@@ -43,7 +52,7 @@ public class StateMachine : MonoBehaviour
         }
     }
 
-    public void SetState(State _newState)
+    public void SetState(T _newState)
     {
         nextState = null;
         if (CurrentState != null)
@@ -51,17 +60,7 @@ public class StateMachine : MonoBehaviour
             CurrentState.OnExit();
         }
         CurrentState = _newState;
-        CurrentState.OnEnter(this);
-    }
-
-    private void CheckTransition(){
-        //Debug.Log(controller.transform.name + " " + customName + " " + CurrentState);
-        if(CurrentState?._transitions == null) return;
-        foreach(Transition transition in CurrentState._transitions){
-            if(transition.Condition()){
-                nextState = transition.nextState;
-            }
-        }
+        CurrentState.OnEnter();
     }
 
     public void Handle()
@@ -76,6 +75,12 @@ public class StateMachine : MonoBehaviour
 
     public void FixedHandle()
     {
+        CheckTransitions();
+
+        if(nextState != null){
+            SetState(nextState);
+        }
+        
         if (CurrentState != null)
             CurrentState.OnFixedHandle();
     }
@@ -85,4 +90,5 @@ public class StateMachine : MonoBehaviour
         if (CurrentState != null)
             CurrentState.OnLateHandle();
     }
+
 }

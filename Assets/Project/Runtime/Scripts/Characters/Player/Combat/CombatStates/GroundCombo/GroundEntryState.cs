@@ -2,31 +2,21 @@ using UnityEngine;
 
 public class GroundEntryState : MeleeBaseState
 {
-    public override void OnEnter(StateMachine _stateMachine)
+    public override void OnEnter()
     {
         attackIndex = 1;
         animation_name = "Attack" + attackIndex;
-        base.OnEnter(_stateMachine);
+        base.OnEnter();
         animationManager.AddAnim(3, animation_name);
         //Attack
-        duration = data.anims[animation_name].length/animator.speed;
+        duration = data.anims[animation_name].length/attackSpeed;
         Debug.Log("Player Attack " + attackIndex + " Fired!");
     }
 
     public override void OnHandle()
     {
         base.OnHandle();
-        if (time >= duration)
-        {
-            if (shouldCombo)
-            {
-                stateMachine.SetNextState(combatStates[ECombat.GroundCombo]);
-            }
-            else
-            {
-                stateMachine.SetNextStateToMain();
-            }
-        }
+        
     }
 
     public override void OnExit()

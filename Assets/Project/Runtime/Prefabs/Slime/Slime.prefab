@@ -115,9 +115,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2302035851166087386}
-  - component: {fileID: 5010813444364911233}
   - component: {fileID: 8586761071674808996}
-  - component: {fileID: 3618064153765197216}
+  - component: {fileID: 7727702094251141954}
+  - component: {fileID: 5952732797327572903}
   m_Layer: 0
   m_Name: Slime_Body
   m_TagString: LivingBody
@@ -142,33 +142,6 @@ Transform:
   - {fileID: 8463170936951265926}
   m_Father: {fileID: 2899827235195842641}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &5010813444364911233
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4594024919164737129}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 1
-  m_Constraints: 112
-  m_CollisionDetection: 0
 --- !u!114 &8586761071674808996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,14 +155,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gravityScale: 4
-  useGrav: 1
---- !u!136 &3618064153765197216
-CapsuleCollider:
+  gravAccel: 0
+  jumpPeakTime: 0
+  useGravity: 1
+--- !u!50 &7727702094251141954
+Rigidbody2D:
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4594024919164737129}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!70 &5952732797327572903
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4594024919164737129}
+  m_Enabled: 1
+  m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -198,14 +202,24 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.59294546
-  m_Height: 1.4
-  m_Direction: 0
-  m_Center: {x: 0, y: 0.48344338, z: 0}
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.06244809, y: 0.49957973}
+  m_Size: {x: 1.4371334, y: 1.1248957}
+  m_Direction: 1
 --- !u!1 &7257367708163810083
 GameObject:
   m_ObjectHideFlags: 0
@@ -216,10 +230,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2899827235195842641}
   - component: {fileID: 8753609375568937710}
-  - component: {fileID: 8014366145040322882}
-  - component: {fileID: 2764006356660738228}
   - component: {fileID: 7632904812134245577}
   - component: {fileID: 4237564676591771426}
+  - component: {fileID: -8176720951948582867}
   m_Layer: 0
   m_Name: Slime
   m_TagString: Untagged
@@ -256,41 +269,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _teamIndex: 2
---- !u!114 &8014366145040322882
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7257367708163810083}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 939a22d1fb7b9d54cb3df3aeb8503708, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  customName: Movement
-  controller: {fileID: 0}
---- !u!114 &2764006356660738228
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7257367708163810083}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33dff12f46afa10469f1f907239fdfff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  teamComponent: {fileID: 8753609375568937710}
-  data: {fileID: 4237564676591771426}
-  idx: 0
-  currentHealth: 0
-  maxHealth: 30
-  defaultDashCD: 4
-  dashCD: 0
-  acceleration: 2
-  deceleration: 2
 --- !u!114 &7632904812134245577
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -318,11 +296,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 8365471913957118602}
-  rb: {fileID: 5010813444364911233}
+  rb: {fileID: 7727702094251141954}
   playerRigidBody: {fileID: 0}
   Hiteffect: {fileID: 0}
   playerController: {fileID: 0}
-  stateMachine: {fileID: 8014366145040322882}
   hitCollider: {fileID: 7683979867012217621}
   GFX: {fileID: 1297009874363962033}
   chaseDistanceThreshold: 1
@@ -330,7 +307,31 @@ MonoBehaviour:
   dashTime: 1
   movementSpeed: 0.5
   idx: 0
+  sqrDistance: 0
+  directionToPlayer: {x: 0, y: 0}
   playerData: {fileID: 0}
+  currentHealth: 0
+  maxHealth: 30
+  defaultDashCD: 4
+  dashCD: 0
+  acceleration: 2
+  deceleration: 2
+--- !u!114 &-8176720951948582867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7257367708163810083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33dff12f46afa10469f1f907239fdfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  teamComponent: {fileID: 8753609375568937710}
+  data: {fileID: 4237564676591771426}
+  idx: 0
+  stateMachine: {fileID: 0}
 --- !u!1 &8403877651346688633
 GameObject:
   m_ObjectHideFlags: 0
@@ -341,7 +342,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8463170936951265926}
   - component: {fileID: 7683979867012217621}
-  - component: {fileID: 3337924185876982010}
+  - component: {fileID: 3071990939372675798}
   m_Layer: 0
   m_Name: HitCollider
   m_TagString: Untagged
@@ -377,13 +378,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CollidersEntered: []
---- !u!136 &3337924185876982010
-CapsuleCollider:
+--- !u!70 &3071990939372675798
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8403877651346688633}
+  m_Enabled: 1
+  m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -392,11 +395,21 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.7
-  m_Height: 0.7
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.057986923, y: 0.48640925}
+  m_Size: {x: 1.4545552, y: 1.115553}
   m_Direction: 1
-  m_Center: {x: 0, y: 0.5, z: 0}

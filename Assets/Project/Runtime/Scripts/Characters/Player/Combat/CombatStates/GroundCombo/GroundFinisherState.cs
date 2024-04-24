@@ -2,25 +2,22 @@ using UnityEngine;
 
 public class GroundFinisherState : MeleeBaseState
 {
-    public override void OnEnter(StateMachine _stateMachine)
+    public override void OnEnter()
     {
         attackIndex = 3;
         animation_name = "Attack" + attackIndex;
-        base.OnEnter(_stateMachine);
+        base.OnEnter();
         animationManager.AddAnim(3, animation_name);
         //Attack
         attackIndex = 3;
-        duration = data.anims[animation_name].length/animator.speed;
+        duration = data.anims[animation_name].length/attackSpeed;
         Debug.Log("Player Attack " + attackIndex + " Fired!");
+        rb.AddForce(data.movementInput*30, ForceMode2D.Impulse);
     }
 
     public override void OnHandle()
     {
         base.OnHandle();
-        if (time >= duration)
-        {
-             stateMachine.SetNextStateToMain();
-        }
     }
 
     public override void OnExit()

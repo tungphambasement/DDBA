@@ -11,9 +11,8 @@ public class PlayerInputController : MonoBehaviour
     [SerializeField] PlayerMovementController playerMovementController;
     [SerializeField] PlayerController playerController;
     [SerializeField] PlayerCombatController playerCombatController;
-    [SerializeField] PlayerData playerData;
 
-    private void Awake()
+    private void OnEnable()
     {
         _playerInputAction = new();
         _playerInputAction.Player.Enable();
@@ -36,10 +35,15 @@ public class PlayerInputController : MonoBehaviour
         _playerInputAction.Player.UseWeapon.performed += UseWeapon_Performed;
 
         //Boost
+        _playerInputAction.Player.Boost.performed += UseBoost_Performed;
 
-        //Crouch
-        _playerInputAction.Player.Crouch.performed += OnCrouch;
-        _playerInputAction.Player.Crouch.canceled += OnCrouch;
+        //Slide
+        _playerInputAction.Player.Slide.performed += Slide_Performed;
+
+        //Cast
+        _playerInputAction.Player.Beam.started += Cast_Started;
+        _playerInputAction.Player.Beam.canceled += Cast_Cancelled;
+       
     }
 
     private void Movement_Performed(InputAction.CallbackContext context)
@@ -64,13 +68,9 @@ public class PlayerInputController : MonoBehaviour
         playerController.Interact();
     }
 
-    private float jumpStartTimer = 0f;
 
     private void Jump_Started(InputAction.CallbackContext context)
     {
-        jumpStartTimer = (float)Time.timeAsDouble;
-        float power = (float)Time.timeAsDouble-jumpStartTimer;
-        Debug.Log(power);
         playerMovementController.OnJump();
     }
 
@@ -83,8 +83,25 @@ public class PlayerInputController : MonoBehaviour
         playerCombatController.WeaponOut();
     }
 
-    private void OnCrouch(InputAction.CallbackContext context)
+    private void Slide_Performed(InputAction.CallbackContext context)
     {
-        playerMovementController.OnCrouch();
+        Debug.Log("Slide Used");
+        playerMovementController.UseSlide();
+    }
+
+    private void UseBoost_Performed(InputAction.CallbackContext context){
+        playerMovementController.UseDash();
+    }
+
+    private void Cast_Started(InputAction.CallbackContext context){
+        playerCombatController.OnCast_Performed();
+    }
+
+    private void Cast_Performed(){
+
+    }
+
+    private void Cast_Cancelled(InputAction.CallbackContext context){
+        playerCombatController.OnCast_Cancelled();
     }
 }

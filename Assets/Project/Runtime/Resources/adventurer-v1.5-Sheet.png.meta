@@ -2495,6 +2495,48 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: adventurer-v1.5-Sheet_113
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 16
+        width: 50
+        height: 37
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f5fc599484f99a34c9b3cdabc2af10f5
+      internalID: -1055444277
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: adventurer-v1.5-Sheet_114
+      rect:
+        serializedVersion: 2
+        x: 250
+        y: 16
+        width: 50
+        height: 37
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c371ae7910165a14abf301314de4bfc4
+      internalID: 923438883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -2523,6 +2565,8 @@ TextureImporter:
       adventurer-v1.5-Sheet_110: -1483110160
       adventurer-v1.5-Sheet_111: -834568158
       adventurer-v1.5-Sheet_112: 1545072972
+      adventurer-v1.5-Sheet_113: -1055444277
+      adventurer-v1.5-Sheet_114: 923438883
       adventurer-v1.5-Sheet_12: -340865883
       adventurer-v1.5-Sheet_13: 577231850
       adventurer-v1.5-Sheet_14: 391865784

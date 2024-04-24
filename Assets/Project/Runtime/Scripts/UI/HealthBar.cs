@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Slider))]
 public class HealthBar : MonoBehaviour
 {   
     private Slider healthSlide;
@@ -16,6 +17,7 @@ public class HealthBar : MonoBehaviour
     }
 
     public void CustomStart(){
+        Debug.Log("Health Initiated");
         unappliedDamage = 0f;
         elapsedTime = 0f;
     }

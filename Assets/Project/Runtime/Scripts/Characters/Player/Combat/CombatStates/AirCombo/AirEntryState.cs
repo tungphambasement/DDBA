@@ -5,31 +5,21 @@ using UnityEngine.InputSystem;
 
 public class AirEntryState : MeleeBaseState
 {
-    public override void OnEnter(StateMachine _stateMachine)
+    public override void OnEnter()
     {
         attackIndex = 1;
         animation_name = "AirAttack" + attackIndex;
-        base.OnEnter(_stateMachine);
+        base.OnEnter();
         animationManager.AddAnim(3, animation_name);
         //Attack
-        duration = data.anims[animation_name].length/animator.speed;
+        duration = data.anims[animation_name].length/attackSpeed;
         Debug.Log("Player Air Attack " + attackIndex + " Fired!");
     }
 
     public override void OnHandle()
     {
         base.OnHandle();
-        if (time >= duration)
-        {
-            if (shouldCombo)
-            {
-                stateMachine.SetNextState(combatStates[ECombat.AirCombo]);
-            }
-            else
-            {
-                stateMachine.SetNextStateToMain();
-            }
-        }
+
         rb.AddForce(new Vector3(0f,10f),ForceMode2D.Force);
     }
 

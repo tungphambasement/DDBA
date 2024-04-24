@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class EnemyController : Controller
 {
-    protected StateMachine stateMachine;
     protected Rigidbody2D rb;
     public EnemyData data;
 
@@ -23,20 +22,9 @@ public class EnemyController : Controller
     // Start is called before the first frame update
     public virtual void Awake()
     {
-        stateMachine = data.stateMachine;
         rb = data.rb;
-        stateMachine.mainStateType = new IdleState();
-        stateMachine.SetNextStateToMain();
     }
 
     public virtual void Start(){
-    }
-
-    public void FixedUpdate(){
-        stateMachine.FixedHandle();
-    }
-
-    public void LateUpdate(){
-        stateMachine.LateHandle();
     }
 }

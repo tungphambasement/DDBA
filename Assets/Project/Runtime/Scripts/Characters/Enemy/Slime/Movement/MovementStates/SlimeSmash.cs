@@ -6,12 +6,14 @@ public class SlimeSmash : SlimeMovementBase
 { 
     private List<Collider> collidersDamaged = new();
 
-    public override void OnEnter(StateMachine _stateMachine)
+    public SlimeSmash(Slime_Data data) : base(data)
     {
-        base.OnEnter(_stateMachine); 
+    }
 
-        BaseUpdate();
-        movementDirection = directionToPlayer.normalized;
+    public override void OnEnter()
+    {
+        base.OnEnter(); 
+        movementDirection = data.directionToPlayer.normalized;
         adjustFlipSprite();
     }
 

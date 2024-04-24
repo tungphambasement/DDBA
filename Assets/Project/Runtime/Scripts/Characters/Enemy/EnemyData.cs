@@ -9,7 +9,6 @@ public class EnemyData : MonoBehaviour
     public Rigidbody2D rb, playerRigidBody;
     public GameObject Hiteffect;
     public PlayerController playerController;
-    public StateMachine stateMachine;
     public HitCollider hitCollider;
     public Transform GFX;
     #endregion
@@ -19,9 +18,28 @@ public class EnemyData : MonoBehaviour
     public int idx;
     #endregion
 
+    #region Status
+    public float sqrDistance;
+    public Vector2 directionToPlayer;
+
+    #endregion
+
     public PlayerData playerData;
 
-    void Start(){
+    void Start()
+    {
         playerRigidBody = playerData.rb;
     }
+
+    public void BaseUpdate()
+    {
+        if (playerRigidBody == null) return;
+        directionToPlayer = playerRigidBody.position - rb.position;
+        sqrDistance = directionToPlayer.sqrMagnitude;
+    }
+
+    private void FixedUpdate(){
+        BaseUpdate();
+    }
+
 }

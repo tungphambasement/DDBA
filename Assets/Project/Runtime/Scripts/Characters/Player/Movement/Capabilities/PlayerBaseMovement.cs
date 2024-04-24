@@ -11,6 +11,8 @@ public class PlayerBaseMovement
     protected Transform _GFX;
     protected GroundChecker groundChecker;
     protected Animator animator;
+    protected AnimationManager animationManager;
+    protected CustomGravity customGravity;
 
     public PlayerBaseMovement(PlayerData _data)
     {
@@ -26,6 +28,8 @@ public class PlayerBaseMovement
         _GFX = data.GFX;
         groundChecker = data.groundChecker;
         animator = data.animator;
+        animationManager = data.animationManager;
+        customGravity = data.customGravity;
     }
 
     public virtual void SetUpConstants()

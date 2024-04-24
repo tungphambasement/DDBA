@@ -31,7 +31,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""name"": ""Move"",
                     ""type"": ""Value"",
                     ""id"": ""10363a2e-fa61-4551-8897-43c46a2ff6bb"",
-                    ""expectedControlType"": ""Double"",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -74,9 +74,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""Boost"",
-                    ""type"": ""PassThrough"",
+                    ""type"": ""Button"",
                     ""id"": ""3a0f725a-d31e-4a7c-9b26-7bec61015796"",
-                    ""expectedControlType"": """",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -91,13 +91,22 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Crouch"",
+                    ""name"": ""Slide"",
                     ""type"": ""Value"",
                     ""id"": ""a56a9b46-1718-4f15-97f8-644d8e643cb8"",
                     ""expectedControlType"": ""Integer"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Beam"",
+                    ""type"": ""Button"",
+                    ""id"": ""0f102c48-ffa1-478d-8851-cb4302626bd4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Hold"",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -124,12 +133,56 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
+                    ""name"": ""up"",
+                    ""id"": ""b3524435-492e-491e-b75b-55ee04352371"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""3d0b2b1b-9bf7-4fb3-91aa-b3871725b959"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""11f406ed-1ff9-4b94-8fa9-d473f80fe8e4"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""7be0c50a-80b4-4893-b633-bb4af0e503b8"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
                     ""name"": ""left"",
                     ""id"": ""d2581a9b-1d11-4566-b27d-b92aff5fabbc"",
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
+                    ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -339,7 +392,18 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Crouch"",
+                    ""action"": ""Slide"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""be8e7c3c-c132-4ed0-bb52-957a90623e2a"",
+                    ""path"": ""<Keyboard>/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Beam"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -934,7 +998,8 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_Boost = m_Player.FindAction("Boost", throwIfNotFound: true);
         m_Player_UseWeapon = m_Player.FindAction("UseWeapon", throwIfNotFound: true);
-        m_Player_Crouch = m_Player.FindAction("Crouch", throwIfNotFound: true);
+        m_Player_Slide = m_Player.FindAction("Slide", throwIfNotFound: true);
+        m_Player_Beam = m_Player.FindAction("Beam", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1015,7 +1080,8 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_Boost;
     private readonly InputAction m_Player_UseWeapon;
-    private readonly InputAction m_Player_Crouch;
+    private readonly InputAction m_Player_Slide;
+    private readonly InputAction m_Player_Beam;
     public struct PlayerActions
     {
         private @PlayerInputAction m_Wrapper;
@@ -1027,7 +1093,8 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @Boost => m_Wrapper.m_Player_Boost;
         public InputAction @UseWeapon => m_Wrapper.m_Player_UseWeapon;
-        public InputAction @Crouch => m_Wrapper.m_Player_Crouch;
+        public InputAction @Slide => m_Wrapper.m_Player_Slide;
+        public InputAction @Beam => m_Wrapper.m_Player_Beam;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1058,9 +1125,12 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @UseWeapon.started += instance.OnUseWeapon;
             @UseWeapon.performed += instance.OnUseWeapon;
             @UseWeapon.canceled += instance.OnUseWeapon;
-            @Crouch.started += instance.OnCrouch;
-            @Crouch.performed += instance.OnCrouch;
-            @Crouch.canceled += instance.OnCrouch;
+            @Slide.started += instance.OnSlide;
+            @Slide.performed += instance.OnSlide;
+            @Slide.canceled += instance.OnSlide;
+            @Beam.started += instance.OnBeam;
+            @Beam.performed += instance.OnBeam;
+            @Beam.canceled += instance.OnBeam;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1086,9 +1156,12 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @UseWeapon.started -= instance.OnUseWeapon;
             @UseWeapon.performed -= instance.OnUseWeapon;
             @UseWeapon.canceled -= instance.OnUseWeapon;
-            @Crouch.started -= instance.OnCrouch;
-            @Crouch.performed -= instance.OnCrouch;
-            @Crouch.canceled -= instance.OnCrouch;
+            @Slide.started -= instance.OnSlide;
+            @Slide.performed -= instance.OnSlide;
+            @Slide.canceled -= instance.OnSlide;
+            @Beam.started -= instance.OnBeam;
+            @Beam.performed -= instance.OnBeam;
+            @Beam.canceled -= instance.OnBeam;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1278,7 +1351,8 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnBoost(InputAction.CallbackContext context);
         void OnUseWeapon(InputAction.CallbackContext context);
-        void OnCrouch(InputAction.CallbackContext context);
+        void OnSlide(InputAction.CallbackContext context);
+        void OnBeam(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

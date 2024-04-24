@@ -2,17 +2,18 @@
 
 public class SlimeHurt : SlimeMovementBase
 {
-    public override void OnEnter(StateMachine _stateMachine)
+    public SlimeHurt(Slime_Data data) : base(data)
     {
-        base.OnEnter(_stateMachine);
+    }
+
+    public override void OnEnter()
+    {
+        base.OnEnter();
         animator.SetTrigger("TakeDamage");  
-        controller.GetComponent<DamageFlash>().CallDamageFlash();
-        if(slimeController.currentHealth  > 0) stateMachine.SetNextState(new SlimeChase());
-        else{
+        if(data.currentHealth <= 0){
             animator.SetBool("isDead",true);
         }
         
     }
-
     
 }  

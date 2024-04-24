@@ -2,31 +2,20 @@ using UnityEngine;
 
 public class AirComboState : MeleeBaseState
 {
-    public override void OnEnter(StateMachine _stateMachine)
+    public override void OnEnter()
     {
         attackIndex = 2;
         animation_name = "AirAttack" + attackIndex;
-        base.OnEnter(_stateMachine);
+        base.OnEnter();
         animationManager.AddAnim(3, animation_name);
         //Attack
-        duration = data.anims[animation_name].length/animator.speed;
+        duration = data.anims[animation_name].length/attackSpeed;
         Debug.Log("Player Air Attack " + attackIndex + " Fired!");
     }
 
     public override void OnHandle()
     {
         base.OnHandle();
-        if (time >= duration)
-        {
-            if (shouldCombo)
-            {
-                stateMachine.SetNextState(combatStates[ECombat.AirFinisher]);
-            }
-            else
-            {
-                stateMachine.SetNextStateToMain();
-            }
-        }
         rb.AddForce(new Vector2(0f,10f),ForceMode2D.Force);
     }
 

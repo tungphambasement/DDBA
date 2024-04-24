@@ -1,44 +1,46 @@
 using System;
 using System.Collections;
-using System.Linq;
-using JetBrains.Annotations;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class EMove {
-    public static int Jump = 1;
-    public static int Run = 0;
-    public static int Crouch = 2;
+public static class EMove {
+    public static int Grounded = 0;
+    public static int OnAir = 1;
+    public static int Climbing = 2;
 }
 
 public class PlayerMovementController : MonoBehaviour
 {
     #region Components
-    private StateMachine combatMachine;
-    private Vector2 movementInput;
+    public StateMachine<MeleeBaseState> combatMachine;
+    public StateMachine<PlayerBaseMovementState> movementMachine;
     private Animator animator;
     private PlayerData data;
     private Transform _GFX;
-    public PlayerMove _playerMove;
-    public PlayerJump _playerJump;
+    private PlayerMove playerMove => data.playerMove;
+    private PlayerJump playerJump  => data.playerJump;
+    private PlayerDash playerDash => data.playerDash;
     private GroundChecker groundChecker;
     private CustomGravity gravManager;
     private AnimationManager animationManager;
     private Rigidbody2D rb;
     private CapsuleCollider2D playerHitbox => data.playerHitbox;
+    private PlayerBaseMovementState currentState => movementMachine.CurrentState; 
     #endregion
 
     #region Jump
     private float coyoteTime => data.coyoteTime;
-    private float jumpPhase = 0;
+    private float jumpPhase => data.jumpPhase;
     private float jumpStartTime, jumpPeakTime, jumpEndTime, jumpExpectedPeakTime;
     private float jumpAirMoveTime => data.jumpAirMoveTime;
-    private float jumpMoveMult = 0.2f;
-    private bool AirHover = false, WallClimbing  = false;
+    private float jumpDegree => data.jumpDegree;
     #endregion
 
     private float gravAccel => data.gravAccel;
     private float defGrav => data.defGrav;
     private float globalGravity => CustomGravity.globalGravity;
+
+    List<PlayerBaseMovementState> movementStates;
 
     public void SetController(PlayerData _data)
     {
@@ -49,136 +51,94 @@ public class PlayerMovementController : MonoBehaviour
     private void SetDefaultVars()
     {
         animator = data.animator;
-        _playerMove = new PlayerMove(data);
-        _playerJump = new PlayerJump(data);
-        movementInput = data.movementInput;
         groundChecker = data.groundChecker;
         gravManager = data.customGravity;
         _GFX = data.GFX;
         combatMachine = data.combatMachine;
+        movementMachine = data.movementMachine;
+        movementMachine.Init();
         animationManager = data.animationManager;
         rb = data.rb;
+        SetupStates();
+        SetupStateBehavior();
+        movementMachine.mainStateType = movementStates[EMove.Grounded];
+        movementMachine.SetNextStateToMain();
 
         jumpExpectedPeakTime = getJumpPeakTime();
     }
 
-    private bool isState(Type type)
+    private void SetupStates()
     {
-        if (combatMachine.CurrentState == null) return false;
-        return combatMachine.CurrentState.GetType() == type;
+        movementStates = new List<PlayerBaseMovementState>
+        {
+            new GroundedState(),
+            new OnAirState(),
+            new ClimbingState()
+        };
     }
 
-    private bool isOutOfCombat()
+    private void SetupStateBehavior()
     {
-        return isState(typeof(MeleeEntryState)) || isState(typeof(CombatIdleState));
+        foreach(PlayerBaseMovementState movementState in movementStates){
+            movementState.Init(data);
+        }
     }
-
-    private void HandleDescend()
-    {
-        animationManager.ForceAdd(2, "Fall");
-        jumpPhase = 2;
-    }
-    
-    bool peaked = false;
 
     void Update(){
-        if(!groundChecker.isGrounded()){
-            if (data.rb.velocity.y <= 0.01f)
-            {
-                if(!peaked){
-                    peaked = true;
-                    jumpPeakTime = (float)Time.timeAsDouble;
-                    Debug.Log("Time Took To Peak" + (jumpPeakTime-jumpStartTime));
-                }
-            }
-        }else{
-            peaked = false;
-        }
+        
+    }
+
+    private bool isOnAir(){
+        return !isGrounded()  && !isClimbing();
+    }
+
+    private bool isGrounded(){
+        return groundChecker.isGrounded();
+    }
+
+    private bool isClimbing(){
+        return isClimbableWall() && Mathf.Abs(data.movementInput.x) > 0.01f;
     }
 
     void FixedUpdate()
     {
-        if (!groundChecker.isGrounded())
+        if(data.isDashing && isWallAhead()){
+            playerDash.OnHitWall();
+        }
+        movementMachine.FixedHandle();
+        if (isOnAir())
         {
-            if (jumpPhase == 1)
-            {
-                jumpPhase = 2;
-            }
-            
-            if(!AirHover && !WallClimbing) gravManager.gravityScale += gravAccel * Time.fixedDeltaTime;
-            
-            if (data.rb.velocity.y < 0f)
-            {
-                HandleDescend();
+            if(!IsMovementState(typeof(OnAirState)))
+                movementMachine.SetNextState(movementStates[EMove.OnAir]);
+        }else if(isClimbing()){
+            if(!IsMovementState(typeof(ClimbingState))) {
+                movementMachine.SetNextState(movementStates[EMove.Climbing]);
+                playerJump.CancelJump(JumpRoutine);
             }
         }
-        else
+        else if(isGrounded())
         {
-            //reset number of jumps when landing
-            data.jumpsLeft = data.numberOfJumps;
-
-            if (jumpPhase == 2)
-            {
-                jumpEndTime = (float)Time.timeAsDouble;
-                Debug.Log("Jump Ended At " + jumpEndTime);
-                Debug.Log("Total Time Took to Land " + (jumpEndTime-jumpStartTime));
-                animationManager.RemoveAnim(2);
-                jumpPhase = 0;
+            if(!IsMovementState(typeof(GroundedState))){
+                movementMachine.SetNextState(movementStates[EMove.Grounded]);
             }
-            if (isOutOfCombat())
-            {
-                gravManager.gravityScale = data.defGrav;
-            }
-        }
-
-        if(isWallAhead() && Mathf.Abs(movementInput.x) > 0.01f){
-            if(!WallClimbing) {
-                StopJump();
-                WallClimbing = true;
-
-                animationManager.ForceAdd(3, "WallHang");
-            }
-        }else if(WallClimbing && (!isWallAhead() || !(Mathf.Abs(movementInput.x) > 0.01f))){
-            if(animationManager.isAnim(3, "WallHang")) animationManager.RemoveAnim(3);
-            WallClimbing = false;
-        }
-
-        if(WallClimbing){
-            data.customGravity.gravityScale = data.defGrav/10;
         }
     }
 
-    private bool isGrounded()
-    {
-        return groundChecker.isGrounded();
+    private bool IsMovementState(Type type){
+        return movementMachine.CurrentState.GetType() == type;
     }
 
     public void UseMove()
     {
-        if (movementInput.magnitude > 0.01f)
-        {
-            float runMult = isGrounded() ? 1 : jumpMoveMult;
-            flipCharacter(movementInput);
-            _playerMove.moveCharacter(movementInput * runMult);
-        }
-        else
-        {
-            if (isGrounded()) _playerMove.brakeMovement(movementInput);
-        }
+        currentState.UseMove();
     }
 
     public void OnMove(Vector2 _movementInput)
     {
-        movementInput = _movementInput;
-        if (movementInput.magnitude > 0f)
+        data.movementInput = _movementInput;
+        if (Mathf.Abs(data.movementInput.x) > 0.01f)
         {
-            animationManager.AddAnim(1, "Run");
-            movementInput.Normalize();
-        }
-        else
-        {
-            animationManager.RemoveAnim(1);
-            animator.speed = 1f;
+            flipCharacter(data.movementInput);
         }
     }
 
@@ -186,77 +146,120 @@ public class PlayerMovementController : MonoBehaviour
 
     public void OnJump()
     {
-        if (data.jumpsLeft > 0 || groundChecker.isGrounded())
+        if(!data.canJump) return;
+        if (data.jumpsLeft > 0)
         {
-            Debug.Log("Expected Peak Time: " + getJumpPeakTime());
-            StopJump();
-            JumpRoutine = StartCoroutine(loopJump());
+            currentState.UseJump();
+            if(IsMovementState(typeof(OnAirState)) && coyoteTime < 0.01f) 
+                data.jumpsLeft--;
+            //Debug.Log("Expected Peak Time: " + getJumpPeakTime());
+            data.jumpDegree = IsMovementState(typeof(ClimbingState)) ? 35 : 0;
+            playerJump.CancelJump(JumpRoutine);
+            JumpRoutine = data.StartCoroutine(loopJump());
         }
     }
 
-    public bool jumpRelease = true;
-
     private float getJumpPeakTime(){
-        float res = Mathf.Sqrt((2f*data.jumpPower*gravAccel + globalGravity)/(globalGravity*gravAccel*gravAccel)) - 1f/gravAccel;
-        //return Mathf.Sqrt(2f*data.jumpPower/(globalGravity*gravAccel) +1f/(gravAccel*gravAccel))- 1f/gravAccel;
+        //float res = Mathf.Sqrt((2f*data.jumpPower*gravAccel + globalGravity)/(globalGravity*gravAccel*gravAccel)) - 1f/gravAccel;
+        float res = data.jumpPower / data.customGravity.gravityScale / globalGravity; 
         return res;
-    }
-
-    private bool JumpReleased()
-    {
-        return jumpRelease == true;
     }
 
     public void ReleaseJump()
     {
-        rb.velocity = new Vector2(rb.velocity.x,rb.velocity.y*0.6f);
-        Debug.Log("Jump Released");
-        jumpRelease = true;
-    }
-    private void StopJump(){
-        if(JumpRoutine == null) return;
-        if(AirHover){
-            AirHover = false;
-            jumpPhase = 2;
-            data.gravAccel *= 2;
-            jumpMoveMult = 0.2f;
-        }
-        animationManager.RemoveAnim(2);
-        StopCoroutine(JumpRoutine);
+        rb.velocity = new Vector2(rb.velocity.x,rb.velocity.y*0.4f);
+        //Debug.Log("Jump Released");
+        data.jumpRelease = true;
     }
 
     private IEnumerator loopJump()
-    {
-        jumpRelease = false;
-        gravManager.gravityScale = data.defGrav;
-        animationManager.ForceAdd(2, "Jump");
-        yield return new WaitForFixedUpdate();
-        _playerJump.jumpStart();
-        jumpPhase = 1;
+    {   
+        //Start
+        playerJump.jumpStart(jumpDegree);
         jumpStartTime = (float)Time.timeAsDouble;
-        Debug.Log("Jump Started At " + jumpStartTime);
-        yield return new WaitForSeconds(data.anims["Jump"].length);
-        animationManager.ForceAdd(2, "JumpLoop");
-        yield return new WaitUntil(() => (float)Time.timeAsDouble-jumpStartTime >= jumpExpectedPeakTime-jumpAirMoveTime/2);
+
+        //yield return new WaitForSeconds(data.anims["Jump"].length);
+
+        //Loop
+        //animationManager.ForceAdd(2, "JumpLoop");
+
+        yield return new WaitUntil(() => ((float)Time.timeAsDouble-jumpStartTime >= jumpExpectedPeakTime-jumpAirMoveTime/2||data.jumpRelease));
+
+        //Hang (Hover)
         animationManager.ForceAdd(2, "AirFloatLoop");
-        AirHover = true;
-        data.gravAccel /= 2;
-        jumpMoveMult = 1.2f;
+        playerJump.ToggleJumpHang();
+
         yield return new WaitForSeconds(jumpAirMoveTime);
-        AirHover = false;
-        jumpPhase = 2;
-        data.gravAccel *= 2;
-        jumpMoveMult = 0.2f;
-        yield return new WaitUntil(() => groundChecker.isGrounded());
+
+        //Unhang (Unhover)
+        playerJump.ToggleJumpHang();
+
+        data.jumpRelease = false;
+        JumpRoutine = null;
     }
 
-    public void OnCrouch()
+    public void UseSlide()
     {
-        _playerMove.crouchCharacter();
+        currentState.UseSlide();
+    }
+
+
+    public void UseDash(){
+        if(IsMovementState(typeof(ClimbingState))) return;
+        playerDash.DashCharacter();
+    }
+
+    private Collider2D[] getAllBoxCast(float distance){
+        return Physics2D.OverlapBoxAll(
+            rb.position + playerHitbox.offset + Vector2.right * _GFX.localScale.x * distance, 
+            new Vector2(0.1f, playerHitbox.size.y - 0.1f),
+            0
+            );
+    }
+    
+    private RaycastHit2D[] getAllRayCast(Vector2 origin, float distance){
+        return Physics2D.RaycastAll(
+            origin, 
+            Vector2.right * _GFX.localScale.x,
+            distance
+            );
+    }
+
+    public bool isWallAhead(){
+        Collider2D[] colliderHit2D = getAllBoxCast(1f);
+        bool canClimb = false;
+        foreach(Collider2D hit in colliderHit2D){
+            if(hit.transform.CompareTag("Object")){
+                canClimb = true;
+                break;
+            }
+        }
+        return canClimb;
+    }
+
+    public bool isClimbableWall(){
+        float distance = data.playerHitbox.size.x*1/2+0.2f;
+        RaycastHit2D[] upperHits = getAllRayCast(data.ClimbUpper.position,distance), lowerHits = getAllRayCast(data.ClimbLower.position,distance);
+        int canClimbWall = 0;
+        foreach(RaycastHit2D hit in upperHits){
+            //Debug.Log(hit.transform.name);
+            if(hit.transform.CompareTag("Object")){
+                canClimbWall++;
+                break;
+            }
+        }
+        foreach(RaycastHit2D hit in lowerHits){
+            if(hit.transform.CompareTag("Object")){
+                canClimbWall++;
+                break;
+            }
+        }
+        return canClimbWall == 2;
     }
 
     private void flipCharacter(Vector2 _movementInput)
     {
+        if(!data.canFlip) return;
         if (_movementInput.x > 0)
         {
             _GFX.localScale = new Vector3(1, 1, 1);
@@ -267,24 +270,21 @@ public class PlayerMovementController : MonoBehaviour
         }
     }
 
-    private RaycastHit2D[] getAllRayCast(float distance){
-        return Physics2D.RaycastAll(rb.position + playerHitbox.offset, Vector2.right * _GFX.localScale.x, distance);
-    }
-
-    public bool isWallAhead(){
-        RaycastHit2D[] raycastHit2Ds = getAllRayCast(1f);
-        bool canClimb = false;
-        foreach(RaycastHit2D hit in raycastHit2Ds){
-            if(hit.transform.CompareTag("Object")){
-                canClimb = true;
-                break;
-            }
-        }
-        return canClimb;
-    }
-
     void OnDrawGizmosSelected(){
         Gizmos.color = Color.red;
-        if(rb != null) Gizmos.DrawRay(rb.position + playerHitbox.offset, Vector2.right * _GFX.localScale.x * 1f);
+        if(rb != null){ 
+            Gizmos.DrawRay(
+                rb.position + playerHitbox.offset, 
+                Vector2.right * _GFX.localScale.x * 1f
+                );
+            Gizmos.DrawCube(
+                rb.position + playerHitbox.offset + Vector2.up*Mathf.Sign(data.movementInput.y)*data.playerHitbox.size.y*1/2,
+                new Vector2(data.playerHitbox.size.x-0.001f,0.1f)
+                );
+            Gizmos.DrawRay(
+                data.ClimbUpper.position,
+                Vector2.right * _GFX.localScale.x * (data.playerHitbox.size.x*1/2+0.1f)
+            );
+        }
     }
 }

@@ -1,20 +1,35 @@
+using System.Data.Common;
 using UnityEngine;
 
+public static class ESlime 
+{
+    public static int Idle = 0;
+    public static int Wander = 1;
+    public static int Chase = 2;
+    public static int Dash = 3;
+    public static int Hurt = 4;
+    public static int Smash = 5;
+}
 
 public class SlimeMovementBase : EnemyMovementBase
 {
-    protected SlimeController slimeController;
-    private float acceleration => slimeController.acceleration;
-    private float deceleration => slimeController.deceleration;
+    protected Slime_Data data;
+
+    public SlimeMovementBase(Slime_Data data) : base(data)
+    {
+        
+    }
+
+    private float acceleration => data.acceleration;
+    private float deceleration => data.deceleration;
 
     private float getAccel(float val){
         return (Mathf.Abs(val) > 0.01f) ? acceleration : deceleration;
     }
 
-    public override void OnEnter(StateMachine _stateMachine)
+    public override void OnEnter()
     {
-        base.OnEnter(_stateMachine);
-        slimeController = controller as SlimeController;
+        base.OnEnter();
         //data = base.data as Slime_Data;
         rb = data.rb;
     }
@@ -28,7 +43,7 @@ public class SlimeMovementBase : EnemyMovementBase
     public override void OnFixedHandle()
     {
         base.OnFixedHandle();
-        if (slimeController.dashCD > 0.0f) slimeController.dashCD -= Time.fixedDeltaTime;
+        if (data.dashCD > 0.0f) data.dashCD -= Time.fixedDeltaTime;
         animator.SetFloat("Speed",rb.velocity.magnitude);
     }
 
@@ -42,17 +57,5 @@ public class SlimeMovementBase : EnemyMovementBase
         //Debug.Log(accelRate + " " + speedDif + " " + curSpeed); 
         rb.AddForce(curSpeed);
     }
-    
-    public void revertToIdle(){
-        data.idx = 1-data.idx;
-        switch (data.idx)
-        {   
-            case 0:
-                stateMachine.SetNextState(new SlimeIdle());
-                break;
-            case 1:
-                stateMachine.SetNextState(new SlimeWander());
-                break;
-        }
-    }
+
 }

@@ -3,41 +3,34 @@
 using UnityEngine;
 
 public class SlimeChase : SlimeMovementBase
-{ 
+{
     private float attackDistanceThreshold;
 
-    public override void OnEnter(StateMachine _stateMachine)
+    public SlimeChase(Slime_Data data) : base(data)
     {
-        base.OnEnter(_stateMachine);
+    }
+
+    public override void OnEnter()
+    {
+        base.OnEnter();
         attackDistanceThreshold = data.attackDistanceThreshold;
-        animator.SetBool("isChasing",true);
+        animator.SetBool("isChasing", true);
     }
 
     public override void OnFixedHandle()
-    {   
+    {
         base.OnFixedHandle();
-        BaseUpdate();
-        if (sqrDistance < Mathf.Pow(chaseDistanceThreshold,2))
+        if (sqrDistance <= Mathf.Pow(chaseDistanceThreshold, 2))
         {
-            movementDirection = directionToPlayer.normalized;
+            movementDirection = data.directionToPlayer.normalized;
             adjustFlipSprite();
-            if(sqrDistance < attackDistanceThreshold && slimeController.dashCD <= 0){
-                slimeController.dashCD = slimeController.defaultDashCD;
-                stateMachine.SetNextState(new SlimeDash());
-            }else{
-                SlideMove(movementDirection);
-            }
+            SlideMove(movementDirection);
         }
-        else
-        {
-            revertToIdle();
-        }
-        
     }
 
     public override void OnExit()
     {
         base.OnExit();
-        animator.SetBool("isChasing",false);
+        animator.SetBool("isChasing", false);
     }
 }

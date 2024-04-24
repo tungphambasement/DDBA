@@ -2,9 +2,13 @@ using UnityEngine;
 
 public class SlimeIdle : SlimeMovementBase
 {
-    public override void OnEnter(StateMachine _stateMachine)
+    public SlimeIdle(Slime_Data data) : base(data)
     {
-        base.OnEnter(_stateMachine);
+    }
+
+    public override void OnEnter()
+    {
+        base.OnEnter();
         randomizeIdle();
         movementDirection = Vector2.zero;
     }
@@ -17,15 +21,8 @@ public class SlimeIdle : SlimeMovementBase
     {
         base.OnFixedHandle();
         duration -= Time.fixedDeltaTime;
-        if(duration <= 0){
-            if (sqrDistance < Mathf.Pow(chaseDistanceThreshold,2))
-            {
-                stateMachine.SetNextState(new SlimeChase());
-            }
-            else
-            {
-                revertToIdle();
-            }
+        if(time >= duration){
+            data.idx = 1 -data.idx;
         }
     }
 }

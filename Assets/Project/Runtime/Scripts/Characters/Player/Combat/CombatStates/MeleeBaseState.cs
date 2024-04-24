@@ -8,13 +8,12 @@ public class MeleeBaseState : State
     public float duration;
     protected List<Collider> colliderToDamage;
     private List<Controller> targetDamaged;
-    protected List<State> combatStates;
-    protected bool shouldCombo;
-    protected float attackIndex;
+    protected List<MeleeBaseState> combatStates;
+    protected float attackIndex, attackSpeed;
     // Input buffer Timer
     private float AttackPressedTimer;
+    private bool allowMove = false;
     protected string animation_name;
-    protected AnimationClip clip;
     #endregion
 
     #region Component Variables
@@ -24,6 +23,7 @@ public class MeleeBaseState : State
     protected HitCollider hitCollider;
     protected Rigidbody2D rb;
     protected AnimationManager animationManager;
+    protected PlayerMovementController movementController => data.movementController;
     #endregion
 
     // The Hit Effect to Spawn on the afflicted Enemy
@@ -39,21 +39,21 @@ public class MeleeBaseState : State
         playerController = data.GetComponent<PlayerController>();
         HitEffectPrefab = data.Hiteffect;
         animationManager = data.animationManager;
+        
     }
 
-    protected void UpdateAnim(){
-        clip = data.anims[animation_name];
-    }
+    
 
-    public override void OnEnter(StateMachine _stateMachine)
+    public override void OnEnter()
     {
-        base.OnEnter(_stateMachine);
+        base.OnEnter();
         AttackPressedTimer = 0;
-        shouldCombo = false;
+        data.shouldCombo = false;
         colliderToDamage = hitCollider.CollidersEntered = new();
         targetDamaged = new();
         data.customGravity.gravityScale = data.defGrav;
-        UpdateAnim();
+        attackSpeed = animator.GetFloat("AttackSpeed");
+        allowMove = false;
         //Debug.Log(data.customGravity);
     }
 
@@ -68,9 +68,14 @@ public class MeleeBaseState : State
     {
         base.OnFire();
         AttackPressedTimer = 1;
-        if (animator.GetFloat("AttackWindow.Open") > 0f && AttackPressedTimer > 0)
+        if (animator.GetFloat("AttackWindow.Open") > 0f)
         {
-            shouldCombo = true;
+            if(!allowMove){
+                allowMove = true;
+                //_behaviors += () => movementController.UseMove();
+            }
+            if(AttackPressedTimer > 0)
+                data.shouldCombo = true;
         }
     }
 

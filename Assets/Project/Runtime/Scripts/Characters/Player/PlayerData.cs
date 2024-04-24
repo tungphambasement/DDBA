@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Data.Common;
 using Codice.Client.Common;
 using UnityEngine;
 
@@ -8,7 +9,8 @@ public class PlayerData : MonoBehaviour
     [Header("Component Variables")]
     public Rigidbody2D rb;
     public Animator animator;
-    public StateMachine combatMachine;
+    public StateMachine<MeleeBaseState> combatMachine = new();
+    public StateMachine<PlayerBaseMovementState> movementMachine = new();
     public DamageFlash damageFlash;
     public HitCollider hitCollider;
     public GameObject Hiteffect;
@@ -17,9 +19,11 @@ public class PlayerData : MonoBehaviour
     public CustomGravity customGravity;
     public PlayerMovementController movementController;
     public PlayerCombatController combatController;
-    public Transform GFX;
+    public PlayerInputController inputController;
+    public Transform GFX, ClimbUpper, ClimbLower;
     public AnimationManager animationManager;
     public CapsuleCollider2D playerHitbox;
+    public SpriteRenderer spriteRenderer;
     #endregion
 
     [Space(20)]
@@ -27,24 +31,47 @@ public class PlayerData : MonoBehaviour
     #region  Constant Data
     [Header("Constant Data")]
     [SerializeField] private ConstPlayerData constData;
+    #region  Run
     public float movementSpeed = 40f;
     public float velPow = 1f;
     public float runAccel = 2f;
     public float runDecel = 2f;
+    #endregion
+
+    #region Jump
     public float jumpPower = 35f;
     public float jumpAirMoveTime = 0.8f;
     public float coyoteTime = 0.3f;
+    public float jumpDegree = 0;
+    public int numberOfJumps = 1;
+    public float maxGravityScale = 4f;
+    #endregion
+
+    #region Dash
+    public float dashTime;
+    public float afterImageDistance;
+    #endregion
+    
+    #region Crouch
+    #endregion
+
     public float defGrav = 1f;
     public float gravAccel = 2f;
-    public int numberOfJumps = 1;
+    public float climbSpeed = 5f;
     #endregion
 
     [Space(20)]
 
     #region Movement Status
     [Header("Movement Status")]
+    public float velocityMult;
     public Vector2 movementInput;
+    public int jumpPhase;
     public int jumpsLeft;
+    public bool jumpRelease, AirHover;
+    public bool canMove = true, canJump = true, canFlip = true, canAttack = true;
+    public bool isCrouching = false, isDashing = false, isSliding = false;
+    public bool shouldCombo, isCasting;
     #endregion
 
     [Space(20)]
@@ -66,14 +93,23 @@ public class PlayerData : MonoBehaviour
 
     #region Foreign Variables
     [Header("Foreign Variables")]
-    [SerializeField] HealthBar healthBar;
+    public HealthBar healthBar;
+    public GameObject afterImagePrefabs;
     #endregion
 
     public float Difficulty = 0f;
     [SerializeField] Color fromColor, toColor;
 
     #region INumerable
+    [Header("IEnumerable")]
+    public Transform AfterImages;
     public Dictionary<string, AnimationClip> anims;
+    #endregion
+
+    #region Movement Capabilities
+    public PlayerMove playerMove { get; private set;}
+    public PlayerJump playerJump { get; private set;}
+    public PlayerDash playerDash { get; private set;}
     #endregion
 
     private void Init()
@@ -88,10 +124,33 @@ public class PlayerData : MonoBehaviour
         defGrav = constData.defGrav;
         gravAccel = constData.gravAccel;
         numberOfJumps = constData.numberOfJumps;
+
+        velocityMult  = 1f;
+
+        playerMove = new PlayerMove(this);
+        playerJump = new PlayerJump(this);
+        playerDash = new PlayerDash(this);
     }
 
     public void ResetJumpsCount(){
         jumpsLeft = numberOfJumps;
+    }
+    
+    public void ResetCoyoteTime(){
+        coyoteTime = constData.coyoteTime;
+    }
+
+    public void multVel(float value){
+        velocityMult *= value;
+        rb.velocity *= value;
+    }
+
+    public void addVel(Vector2 value){
+        rb.velocity += value * velocityMult;
+    }
+
+    public bool isWallAhead(){
+        return movementController.isWallAhead();
     }
 
     //Start is called before the first frame update
@@ -99,10 +158,10 @@ public class PlayerData : MonoBehaviour
     {
         Init();
         ResetJumpsCount();
+        animator.SetFloat("AttackSpeed", 1.25f);
     }
 
     void Update()
     {
-        GFX.GetComponent<SpriteRenderer>().color = Color.Lerp(fromColor, toColor, Difficulty);
     }
 }

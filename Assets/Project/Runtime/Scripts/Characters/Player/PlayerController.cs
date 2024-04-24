@@ -7,12 +7,20 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : Controller
 {
-    public float currentHealth;
+    private float currentHealth;
+
+    public float Health { 
+        get{
+            return currentHealth;
+        }
+        private set{
+            healthBar?.SetHealth(value);
+            currentHealth = value;
+        }
+    }
 
     //UI Display
-    [SerializeField] HealthBar healthBar;
-
-    private StateMachine combatMachine;
+    HealthBar healthBar => data.healthBar;
 
     private Dictionary<IInteractable,bool> nearby_interactables;
     private IInteractable it_interactables;
@@ -45,11 +53,11 @@ public class PlayerController : Controller
 
     public override void TakeDamage(float Damage)
     {
-        currentHealth -= Damage;
+        Health -= Damage;
         //animator.SetTrigger("TakeDamage");
         data.damageFlash.CallDamageFlash();
-        healthBar.SetHealth(currentHealth);
-        if (currentHealth <= 0)
+        healthBar.SetHealth(Health);
+        if (Health <= 0)
         {
             StartCoroutine(Defeated());
             return;
@@ -67,7 +75,6 @@ public class PlayerController : Controller
     void Awake()
     {
         nearby_interactables = new();
-        combatMachine = data.combatMachine;
         movementController.SetController(data);
         combatController.SetController(data);
         currentHealth = data.maxHealth;
@@ -78,22 +85,13 @@ public class PlayerController : Controller
     //Start is called before the first frame update
     void Start()
     {
+        Debug.Log("Health Bar Exist?: " + healthBar!=null);
         if (healthBar != null)
         {
             healthBar.CustomStart();
             healthBar.SetMaxHealth(data.maxHealth);
-            healthBar.SetHealth(currentHealth);
+            healthBar.SetHealth(Health);
         }
-    }
-
-    private void Update()
-    {
-        combatMachine.Handle();
-    }
-
-    private void FixedUpdate()
-    {   
-        combatMachine.FixedHandle();
     }
 
     public void Interact(){

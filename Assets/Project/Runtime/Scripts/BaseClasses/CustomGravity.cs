@@ -4,10 +4,10 @@ using UnityEngine;
 public class CustomGravity : MonoBehaviour
 {
     public float gravityScale = 1.0f;
-
+    public float gravAccel = 0;
     public static float globalGravity = 40f;
-
-    public bool useGrav = true;
+    public float jumpPeakTime = 0;
+    public bool useGravity = true;
 
     Rigidbody2D m_rb;
 
@@ -18,10 +18,16 @@ public class CustomGravity : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (useGrav)
-        {
-            Vector2 gravity = -1f * globalGravity * gravityScale * Vector2.up;
-            m_rb.AddForce(gravity, ForceMode2D.Force);
-        }
+        if(!useGravity) return;
+        jumpPeakTime = getJumpPeakTime();
+        gravityScale += gravAccel;
+        Vector2 gravity = -1f * globalGravity * gravityScale * Vector2.up;
+        m_rb.AddForce(gravity, ForceMode2D.Force);
+
+    }
+
+    private float getJumpPeakTime(){
+        float res = Mathf.Sqrt((2f*m_rb.velocity.y*gravAccel + globalGravity)/(globalGravity*gravAccel*gravAccel)) - 1f/gravAccel;
+        return res;
     }
 }

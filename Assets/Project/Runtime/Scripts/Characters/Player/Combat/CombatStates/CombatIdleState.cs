@@ -2,13 +2,12 @@ using UnityEngine;
 
 public class CombatIdleState : MeleeBaseState
 {
-    public override void OnEnter(StateMachine _stateMachine)
+    public override void OnEnter()
     {
         animation_name = "Idle";
-        base.OnEnter(_stateMachine);
+        base.OnEnter();
         animationManager.RemoveAnim(0);
         animationManager.AddAnim(0, animation_name);
-        _stateMachine.mainStateType = combatStates[ECombat.CombatIdleState];
     }
 
     public override void OnHandle()
