@@ -387,6 +387,12 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
+  - m_Name: RunAngle
+    m_Type: 1
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -458,7 +464,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 4a1d26468f7bdff40b999e7c02b2f4c2, type: 2}
+  m_Motion: {fileID: 6760548841657560361}
   m_Tag: 
   m_SpeedParameter: RunSpeed
   m_MirrorParameter: 
@@ -590,7 +596,7 @@ AnimatorStateMachine:
     m_Position: {x: 0, y: -490, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -1487495455989610591}
-    m_Position: {x: 430, y: -440, z: 0}
+    m_Position: {x: 910, y: -670, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7019556917081224021}
     m_Position: {x: 0, y: -870, z: 0}
@@ -611,16 +617,16 @@ AnimatorStateMachine:
     m_Position: {x: 0, y: -430, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5003368666574876781}
-    m_Position: {x: 760, y: -680, z: 0}
+    m_Position: {x: 930, y: -450, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1774188007408492895}
     m_Position: {x: 0, y: -370, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -8229452289802822960}
-    m_Position: {x: 760, y: -600, z: 0}
+    m_Position: {x: 930, y: -370, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -9025319737343673232}
-    m_Position: {x: 680, y: -450, z: 0}
+    m_Position: {x: 670, y: -450, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -8479678114238406733}
     m_Position: {x: 220, y: -670, z: 0}
@@ -629,31 +635,34 @@ AnimatorStateMachine:
     m_Position: {x: 440, y: -670, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -4660348676900612656}
-    m_Position: {x: 475, y: -605, z: 0}
+    m_Position: {x: 670, y: -670, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3969677204635121175}
-    m_Position: {x: 450, y: -550, z: 0}
+    m_Position: {x: 0, y: -300, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1024349370624447635}
-    m_Position: {x: 430, y: -500, z: 0}
+    m_Position: {x: 0, y: -240, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6442229625885069336}
-    m_Position: {x: 460, y: -380, z: 0}
+    m_Position: {x: 0, y: -180, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3912920993708100261}
-    m_Position: {x: 435, y: -305, z: 0}
+    m_Position: {x: 380, y: -310, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -94602302053390308}
-    m_Position: {x: 470, y: -240, z: 0}
+    m_Position: {x: 380, y: -250, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 4185898601642499392}
-    m_Position: {x: 505, y: -175, z: 0}
+    m_Position: {x: 380, y: -180, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -5505502510860640088}
-    m_Position: {x: 540, y: -110, z: 0}
+    m_Position: {x: 380, y: -120, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7872486446834976589}
-    m_Position: {x: 575, y: -45, z: 0}
+    m_Position: {x: 150, y: -40, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 6926240195926047827}
+    m_Position: {x: 185, y: 25, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -810,13 +819,62 @@ AnimatorState:
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
   m_Mirror: 0
-  m_SpeedParameterActive: 1
+  m_SpeedParameterActive: 0
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400000, guid: fa1d5c92359bac743842baf1f28f7c6b, type: 2}
   m_Tag: 
   m_SpeedParameter: ClimbSpeed
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!206 &6760548841657560361
+BlendTree:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Blend Tree
+  m_Childs:
+  - serializedVersion: 2
+    m_Motion: {fileID: 7400000, guid: 4a1d26468f7bdff40b999e7c02b2f4c2, type: 2}
+    m_Threshold: 0
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: AttackWindow.Open
+    m_Mirror: 0
+  m_BlendParameter: RunAngle
+  m_BlendParameterY: AttackWindow.Open
+  m_MinThreshold: 0
+  m_MaxThreshold: 0
+  m_UseAutomaticThresholds: 1
+  m_NormalizedBlendValues: 0
+  m_BlendType: 0
+--- !u!1102 &6926240195926047827
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: SlopeSlideLoop
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: 33dfc1304589fc24984b6d65e1613125, type: 2}
+  m_Tag: 
+  m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 

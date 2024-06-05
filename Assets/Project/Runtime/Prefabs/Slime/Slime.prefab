@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1297009874363962033}
   - component: {fileID: 2345425761121718160}
-  - component: {fileID: 8365471913957118602}
   m_Layer: 0
   m_Name: GFX
   m_TagString: Untagged
@@ -53,7 +52,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: dcccfc36fdf19464f90de8cfbc6be880, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -71,8 +70,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1276417777
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: -675544356, guid: 2e53597186db3c74ca77265fb839b61f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -85,27 +84,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &8365471913957118602
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1647527675180800180}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 2bd8822acdbcd8043a6d26dc7023069e, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4594024919164737129
 GameObject:
   m_ObjectHideFlags: 0
@@ -118,6 +96,7 @@ GameObject:
   - component: {fileID: 8586761071674808996}
   - component: {fileID: 7727702094251141954}
   - component: {fileID: 5952732797327572903}
+  - component: {fileID: 2832984285763119915}
   m_Layer: 0
   m_Name: Slime_Body
   m_TagString: LivingBody
@@ -154,7 +133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 583c7d39d57eedd4b95726a466e82da4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravityScale: 4
+  gravityScale: 1
   gravAccel: 0
   jumpPeakTime: 0
   useGravity: 1
@@ -184,7 +163,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!70 &5952732797327572903
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -217,9 +196,30 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.06244809, y: 0.49957973}
-  m_Size: {x: 1.4371334, y: 1.1248957}
-  m_Direction: 1
+  m_Offset: {x: 0.01771844, y: 0.52294964}
+  m_Size: {x: 1.3320907, y: 1.0639602}
+  m_Direction: 0
+--- !u!95 &2832984285763119915
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4594024919164737129}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2bd8822acdbcd8043a6d26dc7023069e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7257367708163810083
 GameObject:
   m_ObjectHideFlags: 0
@@ -295,7 +295,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a4a187fe51441d45adfcf3f3ebde753, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 8365471913957118602}
+  animator: {fileID: 2832984285763119915}
   rb: {fileID: 7727702094251141954}
   playerRigidBody: {fileID: 0}
   Hiteffect: {fileID: 0}
@@ -305,7 +305,7 @@ MonoBehaviour:
   chaseDistanceThreshold: 1
   attackDistanceThreshold: 0.4
   dashTime: 1
-  movementSpeed: 0.5
+  movementSpeed: 20
   idx: 0
   sqrDistance: 0
   directionToPlayer: {x: 0, y: 0}
@@ -329,9 +329,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   teamComponent: {fileID: 8753609375568937710}
-  data: {fileID: 4237564676591771426}
   idx: 0
-  stateMachine: {fileID: 0}
+  data: {fileID: 4237564676591771426}
 --- !u!1 &8403877651346688633
 GameObject:
   m_ObjectHideFlags: 0
@@ -407,9 +406,9 @@ CapsuleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.057986923, y: 0.48640925}
-  m_Size: {x: 1.4545552, y: 1.115553}
+  m_Offset: {x: 0.0055938405, y: 0.52831215}
+  m_Size: {x: 1.327397, y: 1.0379497}
   m_Direction: 1

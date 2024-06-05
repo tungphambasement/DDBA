@@ -31,11 +31,13 @@ public class PlayerJump : PlayerBaseMovement
         rb.AddForce(new Vector2(horizontalForce,verticalForce),ForceMode2D.Impulse);
     }
 
-    public void ToggleJumpHang(){
+    public void ToggleJumpHang(float hoverMult){
         if(!data.AirHover){
+            data.hoverMult = hoverMult;
             data.AirHover = true; 
             data.gravAccel /= 2;
         }else{
+            data.hoverMult = 0.2f;
             data.AirHover = false;
             data.gravAccel *= 2;
         }
@@ -44,8 +46,11 @@ public class PlayerJump : PlayerBaseMovement
     public void CancelJump(Coroutine JumpRoutine){
         if(JumpRoutine == null) return;
         if(data.AirHover){
-            ToggleJumpHang();
+            ToggleJumpHang(0.2f);
+        }else{
+            data.canFlip = true;
         }
+        //Debug.Log("Cancelling Jump");
         data.jumpRelease = false;
         data.jumpPhase = 0; 
         animationManager.RemoveAnim(2);

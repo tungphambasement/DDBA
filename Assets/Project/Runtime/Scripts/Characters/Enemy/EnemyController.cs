@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class EnemyController : Controller
 {
-    protected Rigidbody2D rb;
-    public EnemyData data;
 
     public int idx;
 
@@ -22,7 +20,6 @@ public class EnemyController : Controller
     // Start is called before the first frame update
     public virtual void Awake()
     {
-        rb = data.rb;
     }
 
     public virtual void Start(){

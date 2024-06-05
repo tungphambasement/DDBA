@@ -14,7 +14,7 @@ public class SlimeWander : SlimeMovementBase
     }
 
     private void randomizeWander(){
-        movementDirection = new Vector3(Random.Range(-1.0f,1.0f),0f,Random.Range(-1.0f,1.0f)); 
+        movementDirection = new Vector2(Random.Range(-1.0f,1.0f),0f); 
         duration = Random.Range(1.0f,2.5f);
         movementDirection.Normalize();
     }
@@ -22,6 +22,7 @@ public class SlimeWander : SlimeMovementBase
     public override void OnFixedHandle()
     {
         base.OnFixedHandle();
+        //Debug.Log("Wandering");
         SlideMove(movementDirection);
         if (time >= duration)
         {                   

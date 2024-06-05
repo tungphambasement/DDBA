@@ -17,7 +17,7 @@ public class SlimeMovementBase : EnemyMovementBase
 
     public SlimeMovementBase(Slime_Data data) : base(data)
     {
-        
+        this.data = data;
     }
 
     private float acceleration => data.acceleration;
@@ -57,5 +57,4 @@ public class SlimeMovementBase : EnemyMovementBase
         //Debug.Log(accelRate + " " + speedDif + " " + curSpeed); 
         rb.AddForce(curSpeed);
     }
-
 }

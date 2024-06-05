@@ -9,9 +9,8 @@ public class AfterImageController : MonoBehaviour
     private float activeTime = 0.1f;
     private float alpha;
 
-    [SerializeField]
-    private float alphaSet = 0.8f;
-    private float alphaMult = 0.95f;
+    public float alphaSet = 0.8f;
+    public float alphaMult = 0.97f;
     private float timeOn;
 
     public ObjectPool<AfterImageController> objectPool;
@@ -29,7 +28,7 @@ public class AfterImageController : MonoBehaviour
         timeOn = 0f;
     }
 
-    void FixedUpdate()
+    void Update()
     {
         alpha *= alphaMult;
         spriteRenderer.material.SetFloat("_Alpha", alpha);

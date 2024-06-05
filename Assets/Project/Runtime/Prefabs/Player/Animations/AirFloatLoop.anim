@@ -27,7 +27,7 @@ AnimationClip:
     - time: 0.5
       value: {fileID: 1545072972, guid: 53e15dc883e063741a62fdb8c772c773, type: 3}
     attribute: m_Sprite
-    path: 
+    path: GFX
     classID: 212
     script: {fileID: 0}
     flags: 2
@@ -39,7 +39,7 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 0
+      path: 1225224978
       attribute: 0
       script: {fileID: 0}
       typeID: 212

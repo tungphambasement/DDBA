@@ -7,7 +7,7 @@ public class SlimeDash : SlimeMovementBase
     private float warmUp;
     private List<Controller> targetDamaged = new();
     private HitCollider hitCollider;
-    public List<Collider> collidersToDamage;
+    public List<Collider2D> collidersToDamage;
     private float dashTime;
 
     public SlimeDash(Slime_Data data) : base(data)
@@ -57,9 +57,9 @@ public class SlimeDash : SlimeMovementBase
         }
     }
 
-    public virtual void InflictDamage(Collider targetCollider)
+    public virtual void InflictDamage(Collider2D targetCollider)
     {
-        Controller target = targetCollider.GetComponentInParent<Controller>();
+        Controller target = GameHandler.Instance.GetController(targetCollider);
         if (target == null || targetDamaged.Contains(target)) return;
         TeamComponent hitTeamComponent = target.teamComponent;
         if (hitTeamComponent && hitTeamComponent.teamIndex == TeamIndex.Enemy)

@@ -85,7 +85,6 @@ public class PlayerController : Controller
     //Start is called before the first frame update
     void Start()
     {
-        Debug.Log("Health Bar Exist?: " + healthBar!=null);
         if (healthBar != null)
         {
             healthBar.CustomStart();

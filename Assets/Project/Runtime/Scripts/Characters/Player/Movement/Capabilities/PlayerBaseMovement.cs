@@ -9,7 +9,6 @@ public class PlayerBaseMovement
     protected GameObject playerBody;
     protected PlayerData data;
     protected Transform _GFX;
-    protected GroundChecker groundChecker;
     protected Animator animator;
     protected AnimationManager animationManager;
     protected CustomGravity customGravity;
@@ -26,7 +25,6 @@ public class PlayerBaseMovement
         rb = data.rb;
         playerBody = data.playerBody;
         _GFX = data.GFX;
-        groundChecker = data.groundChecker;
         animator = data.animator;
         animationManager = data.animationManager;
         customGravity = data.customGravity;

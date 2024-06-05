@@ -17,7 +17,7 @@ public class HealthBar : MonoBehaviour
     }
 
     public void CustomStart(){
-        Debug.Log("Health Initiated");
+        //Debug.Log("Health Initiated");
         unappliedDamage = 0f;
         elapsedTime = 0f;
     }

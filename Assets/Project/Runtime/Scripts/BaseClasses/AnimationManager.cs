@@ -28,9 +28,9 @@ public class AnimationManager : MonoBehaviour
     }
 
     public void ForceAdd(int key, string animation_name){
+        //if(!isAnim(key, animation_name)) Debug.Log("Forced " + animation_name);
         RemoveAnim(key);
         AddAnim(key,animation_name);
-        //Debug.Log("Forced " + animation_name);
     }
 
     public bool isAnim(int key, string animation_name){
@@ -57,12 +57,16 @@ public class AnimationManager : MonoBehaviour
         {
             int last = anims.Count - 1;
             string nextAnimation = anims.Values[last];
+            //Debug.Log(nextAnimation + " " +  Time.timeAsDouble);
             animator.Play(nextAnimation);
         }
     }
 
     public void RemoveAnim(int key)
     {
-        if(anims.ContainsKey(key)) {  anims.Remove(key);}
+        if(anims.ContainsKey(key)) {
+            //if(key == 2) Debug.Log("Removed at " + Time.timeAsDouble);
+            anims.Remove(key);
+        }
     }
 }

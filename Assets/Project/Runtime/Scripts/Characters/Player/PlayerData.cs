@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Data.Common;
 using Codice.Client.Common;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class PlayerData : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class PlayerData : MonoBehaviour
     public AnimationManager animationManager;
     public CapsuleCollider2D playerHitbox;
     public SpriteRenderer spriteRenderer;
+    public CollisionListener collisionListener;
     #endregion
 
     [Space(20)]
@@ -42,6 +44,7 @@ public class PlayerData : MonoBehaviour
     public float jumpPower = 35f;
     public float jumpAirMoveTime = 0.8f;
     public float coyoteTime = 0.3f;
+    public float hoverMult;
     public float jumpDegree = 0;
     public int numberOfJumps = 1;
     public float maxGravityScale = 4f;
@@ -64,14 +67,16 @@ public class PlayerData : MonoBehaviour
 
     #region Movement Status
     [Header("Movement Status")]
-    public float velocityMult;
     public Vector2 movementInput;
     public int jumpPhase;
     public int jumpsLeft;
     public bool jumpRelease, AirHover;
     public bool canMove = true, canJump = true, canFlip = true, canAttack = true;
     public bool isCrouching = false, isDashing = false, isSliding = false;
+    public bool isAccelGrav = true;
+    public bool topHit = false, upperHit = false, midHit = false, lowerHit = false, bottomHit = false;
     public bool shouldCombo, isCasting;
+    public Coroutine JumpRoutine;
     #endregion
 
     [Space(20)]
@@ -94,6 +99,7 @@ public class PlayerData : MonoBehaviour
     #region Foreign Variables
     [Header("Foreign Variables")]
     public HealthBar healthBar;
+    public DashTrail dashTrail;
     public GameObject afterImagePrefabs;
     #endregion
 
@@ -125,8 +131,6 @@ public class PlayerData : MonoBehaviour
         gravAccel = constData.gravAccel;
         numberOfJumps = constData.numberOfJumps;
 
-        velocityMult  = 1f;
-
         playerMove = new PlayerMove(this);
         playerJump = new PlayerJump(this);
         playerDash = new PlayerDash(this);
@@ -140,15 +144,6 @@ public class PlayerData : MonoBehaviour
         coyoteTime = constData.coyoteTime;
     }
 
-    public void multVel(float value){
-        velocityMult *= value;
-        rb.velocity *= value;
-    }
-
-    public void addVel(Vector2 value){
-        rb.velocity += value * velocityMult;
-    }
-
     public bool isWallAhead(){
         return movementController.isWallAhead();
     }
@@ -158,7 +153,7 @@ public class PlayerData : MonoBehaviour
     {
         Init();
         ResetJumpsCount();
-        animator.SetFloat("AttackSpeed", 1.25f);
+        animator.SetFloat("AttackSpeed", 1.5f);
     }
 
     void Update()

@@ -9,6 +9,7 @@ public class StateMachine<T> where T : State
     public T CurrentState { get; private set; }
     private T nextState;
     public Dictionary<T, List<Transition<T>>> stateTransitions;
+    public List<Transition<T>> anyTransitions;
 
     public void Init()
     {
@@ -30,18 +31,33 @@ public class StateMachine<T> where T : State
         {
         }
     }
-    
-    private void CheckTransitions(){
-        if(CurrentState == null || !stateTransitions.ContainsKey(CurrentState)) return;
-        List<Transition<T>> transitions = stateTransitions[CurrentState];
-        if(transitions == null) return;
-        foreach(Transition<T> transition in transitions){
-            //Debug.Log(CurrentState + " " + transition.Condition + " " + transition.Condition()+  " "+ transition.nextState);
-            if(transition.Condition()){
-                nextState = transition.nextState;
-                break;
+
+    private void CheckTransitions()
+    {
+        if (CurrentState == null) return;
+        List<Transition<T>> transitions = new();
+        if (stateTransitions.ContainsKey(CurrentState)) transitions = stateTransitions[CurrentState];
+        if (transitions != null)
+        {
+            foreach (Transition<T> transition in transitions)
+            {
+
+                if (transition.Condition())
+                {
+                    nextState = transition.nextState;
+                    return;
+                }
             }
         }
+        if (anyTransitions != null)
+            foreach (Transition<T> transition in anyTransitions)
+            {
+                if (transition.Condition())
+                {
+                    if(transition.nextState != CurrentState) nextState = transition.nextState;
+                    return;
+                }
+            }
     }
 
     public void SetNextState(T _newState)
@@ -65,7 +81,8 @@ public class StateMachine<T> where T : State
 
     public void Handle()
     {
-        if(nextState != null){
+        if (nextState != null)
+        {
             SetState(nextState);
         }
 
@@ -77,10 +94,11 @@ public class StateMachine<T> where T : State
     {
         CheckTransitions();
 
-        if(nextState != null){
+        if (nextState != null)
+        {
             SetState(nextState);
         }
-        
+
         if (CurrentState != null)
             CurrentState.OnFixedHandle();
     }

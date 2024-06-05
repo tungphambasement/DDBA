@@ -6,7 +6,7 @@ public class MeleeBaseState : State
 {
     #region Local Var
     public float duration;
-    protected List<Collider> colliderToDamage;
+    protected List<Collider2D> colliderToDamage;
     private List<Controller> targetDamaged;
     protected List<MeleeBaseState> combatStates;
     protected float attackIndex, attackSpeed;
@@ -96,9 +96,9 @@ public class MeleeBaseState : State
         }
     }
 
-    public virtual void InflictDamage(Collider targetCollider)
+    public virtual void InflictDamage(Collider2D targetCollider)
     {
-        Controller target = targetCollider.GetComponentInParent<Controller>();
+        Controller target = GameHandler.Instance.GetController(targetCollider);
         if(target == null || targetDamaged.Contains(target)) return;
         TeamComponent hitTeamComponent = target.teamComponent;
         if (hitTeamComponent && hitTeamComponent.teamIndex == TeamIndex.Enemy)

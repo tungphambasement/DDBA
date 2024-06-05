@@ -19,7 +19,7 @@ MonoBehaviour:
   jumpPower: 35
   jumpAirMoveTime: 0.8
   coyoteTime: 0.3
-  defGrav: 2
+  defGrav: 1
   gravAccel: 1.5
   numberOfJumps: 2
   CombatCD: 5

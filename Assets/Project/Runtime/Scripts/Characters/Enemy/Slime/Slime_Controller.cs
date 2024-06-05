@@ -3,17 +3,25 @@ using UnityEngine;
 
 public class SlimeController : EnemyController, IMovable
 {   
-    new Slime_Data data;
+    public Slime_Data data;
     public StateMachine<SlimeMovementBase> stateMachine;
     public List<SlimeMovementBase> slimeStates;
+    private Rigidbody2D rb;
 
 
     // Start is called before the first frame update
     public override void Awake(){
         base.Awake();
+    }
+
+    public void OnEnable(){
         SetupStates();
-        stateMachine.mainStateType = slimeStates[ESlime.Idle];
-        stateMachine.SetNextStateToMain();
+        stateMachine = new StateMachine<SlimeMovementBase>
+        {
+            mainStateType = slimeStates[ESlime.Idle]
+        };
+        stateMachine.Init();
+        SetupTransitions();
     }
 
     public void moveSelf(Vector2 direction)
@@ -36,6 +44,12 @@ public class SlimeController : EnemyController, IMovable
     {
         stateMachine.Handle();
     }
+    
+    public void FixedUpdate()
+    {
+        //Debug.Log(stateMachine.CurrentState);
+        stateMachine.FixedHandle();
+    }
 
      private void SetupStates()
     {
@@ -48,7 +62,6 @@ public class SlimeController : EnemyController, IMovable
             new SlimeHurt(data),
             new SlimeSmash(data),
         };
-        SetupTransitions();
     }
 
     private bool isChasing(){
@@ -64,6 +77,8 @@ public class SlimeController : EnemyController, IMovable
     }
 
     private void SetupTransitions(){
+        //Debug.Log("WHAT");
+        //Debug.Log((stateMachine == null) + " " + (stateMachine.stateTransitions == null));
         //Idle
         stateMachine.stateTransitions.Add(
             slimeStates[ESlime.Idle],new(){
@@ -90,7 +105,7 @@ public class SlimeController : EnemyController, IMovable
 
         //Dash
         stateMachine.stateTransitions.Add(
-            slimeStates[ESlime.Chase],new(){
+            slimeStates[ESlime.Dash],new(){
                 new(()=>!isDashing(), slimeStates[ESlime.Chase]),
                 }
         );

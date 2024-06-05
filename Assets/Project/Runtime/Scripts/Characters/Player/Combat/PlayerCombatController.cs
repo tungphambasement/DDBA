@@ -160,15 +160,15 @@ public class PlayerCombatController : MonoBehaviour
 
     public void OnCast_Cancelled()
     {
-        Debug.Log("Cast cancelled");
+        //Debug.Log("Cast cancelled");
         data.isCasting = false;
     }
 
     Coroutine weaponCoroutine;
 
-    private void ToggleIdle()
+    private void ToggleIdle(bool state)
     {
-        data.canAttack = data.canFlip = data.canJump = data.canMove = !data.canMove;
+        data.canAttack = data.canFlip = data.canJump = data.canMove = !state;
     }
 
     public void WeaponOut()
@@ -178,7 +178,7 @@ public class PlayerCombatController : MonoBehaviour
             if (weaponCoroutine == null)
             {
                 weaponOut = true;
-                ToggleIdle();
+                ToggleIdle(true);
                 weaponCoroutine = StartCoroutine(SwordOut());
                 combatMachine.mainStateType = combatStates[ECombat.MeleeEntryState];
             }
@@ -188,7 +188,7 @@ public class PlayerCombatController : MonoBehaviour
             if (weaponCoroutine == null)
             {
                 weaponOut = false;
-                ToggleIdle();
+                ToggleIdle(true);
                 weaponCoroutine = StartCoroutine(SwordIn());
                 combatMachine.mainStateType = combatStates[ECombat.CombatIdleState];
             }
@@ -199,9 +199,9 @@ public class PlayerCombatController : MonoBehaviour
     {
         animationManager.RemoveAnim(0);
         animationManager.AddAnim(0, "SwordOut");
-        yield return new WaitForSeconds(data.anims["SwordOut"].length - 0.01f);
+        yield return new WaitForSeconds(data.anims["SwordOut"].length);
         combatMachine.SetNextState(combatStates[ECombat.MeleeEntryState]);
-        ToggleIdle();
+        ToggleIdle(false);
         weaponCoroutine = null;
     }
 
@@ -209,9 +209,9 @@ public class PlayerCombatController : MonoBehaviour
     {
         animationManager.RemoveAnim(0);
         animationManager.AddAnim(0, "SwordIn");
-        yield return new WaitForSeconds(data.anims["SwordIn"].length - 0.01f);
+        yield return new WaitForSeconds(data.anims["SwordIn"].length);
         combatMachine.SetNextState(combatStates[ECombat.CombatIdleState]);
-        ToggleIdle();
+        ToggleIdle(false);
         weaponCoroutine = null;
     }
 }
