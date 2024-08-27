@@ -13,6 +13,8 @@ public class AfterImageController : MonoBehaviour
     public float alphaMult = 0.97f;
     private float timeOn;
 
+    private float fadeCountDown = 0;
+
     public ObjectPool<AfterImageController> objectPool;
 
     private SpriteRenderer spriteRenderer;
@@ -26,12 +28,19 @@ public class AfterImageController : MonoBehaviour
     {
         alpha = alphaSet;
         timeOn = 0f;
+        fadeCountDown = 0f;
     }
 
     void Update()
     {
-        alpha *= alphaMult;
-        spriteRenderer.material.SetFloat("_Alpha", alpha);
+        fadeCountDown += Time.deltaTime;
+        if(fadeCountDown > 0.01f){
+            int times = (int) (fadeCountDown/0.01f);
+            alpha *= 1f-(1f-alphaMult)/times;
+            fadeCountDown = 0f;
+             spriteRenderer.material.SetFloat("_Alpha", alpha);
+        }
+
         timeOn += Time.deltaTime;
         if(timeOn >= activeTime){
             objectPool.ReturnObject(this);

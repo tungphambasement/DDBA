@@ -16,7 +16,7 @@ public class AirComboState : MeleeBaseState
     public override void OnHandle()
     {
         base.OnHandle();
-        rb.AddForce(new Vector2(0f,10f),ForceMode2D.Force);
+        rb.AddForce(new Vector2(0f,8f),ForceMode2D.Force);
     }
 
     public override void OnExit()

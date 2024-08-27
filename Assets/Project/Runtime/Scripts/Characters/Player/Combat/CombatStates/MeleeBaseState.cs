@@ -72,13 +72,20 @@ public class MeleeBaseState : State
         {
             if(!allowMove){
                 allowMove = true;
-                //_behaviors += () => movementController.UseMove();
             }
             if(AttackPressedTimer > 0)
                 data.shouldCombo = true;
         }
     }
 
+    public virtual void OnCast_Start(){
+
+    }
+
+    public virtual void OnCast_Released(){
+
+    }
+    
     public override void OnExit()
     {
         base.OnExit();

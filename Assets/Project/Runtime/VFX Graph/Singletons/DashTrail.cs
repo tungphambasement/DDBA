@@ -15,7 +15,7 @@ public class DashTrail : MonoBehaviour{
     List<Ray> raysToDraw = new();
 
     public void SpawnEffect(Vector3 velocity){
-        Debug.Log(this.transform.position + " " + "Playing");
+        //Debug.Log(this.transform.position + " " + "Playing");
         raysToDraw.Add(new Ray(transform.position,velocity));
         dashTrailEffect.SetVector2("Velocity", velocity);
         dashTrailEffect.Play();
@@ -24,7 +24,7 @@ public class DashTrail : MonoBehaviour{
 
     private IEnumerator Pool(){
         yield return new WaitForSeconds(3);
-        Debug.Log("Pooled");
+        //Debug.Log("Pooled");
         dashTrailPool.ReturnObject(this);
     }
 

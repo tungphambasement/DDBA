@@ -20,7 +20,7 @@ public class AirEntryState : MeleeBaseState
     {
         base.OnHandle();
 
-        rb.AddForce(new Vector3(0f,10f),ForceMode2D.Force);
+        rb.AddForce(new Vector3(0f,8f),ForceMode2D.Force);
     }
 
     public override void OnExit()

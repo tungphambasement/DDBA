@@ -102,6 +102,6 @@ public class PlayerInputController : MonoBehaviour
     }
 
     private void Cast_Cancelled(InputAction.CallbackContext context){
-        playerCombatController.OnCast_Cancelled();
+        playerCombatController.OnCast_Released();
     }
 }

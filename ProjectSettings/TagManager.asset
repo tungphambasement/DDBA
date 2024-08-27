@@ -13,7 +13,7 @@ TagManager:
   - CollidableObjects
   - Water
   - UI
-  - 
+  - DistortionEffect
   - 
   - 
   - 
@@ -52,9 +52,6 @@ TagManager:
   - name: BackRocks
     uniqueID: 2945958667
     locked: 0
-  - name: New Layer 7
-    uniqueID: 2688209429
-    locked: 0
   - name: GroundBack
     uniqueID: 530393251
     locked: 0
@@ -67,18 +64,9 @@ TagManager:
   - name: Decor
     uniqueID: 1245948405
     locked: 0
+  - name: Highest Layer For Distortion Effect
+    uniqueID: 1934017249
+    locked: 0
   - name: UI
     uniqueID: 1630425631
-    locked: 0
-  - name: New Layer 8
-    uniqueID: 1369449447
-    locked: 0
-  - name: New Layer 9
-    uniqueID: 671374383
-    locked: 0
-  - name: New Layer 10
-    uniqueID: 230178551
-    locked: 0
-  - name: New Layer 11
-    uniqueID: 3595630837
     locked: 0

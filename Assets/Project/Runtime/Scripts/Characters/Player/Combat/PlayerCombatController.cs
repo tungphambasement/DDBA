@@ -158,10 +158,9 @@ public class PlayerCombatController : MonoBehaviour
         data.isCasting = true;
     }
 
-    public void OnCast_Cancelled()
+    public void OnCast_Released()
     {
-        //Debug.Log("Cast cancelled");
-        data.isCasting = false;
+        combatMachine.CurrentState.OnCast_Released();
     }
 
     Coroutine weaponCoroutine;

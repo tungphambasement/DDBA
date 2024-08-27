@@ -72,7 +72,7 @@ public class PlayerMove : PlayerBaseMovement
         if(slopeNormalPerp.normalized.y > 0.9) forcetoAdd = new Vector2(forcetoAdd.x, forcetoAdd.y * 0.95f);
         //Debug.Log(forcetoAdd);
         rb.AddForce(forcetoAdd);
-        animator.SetFloat("RunSpeed",Mathf.Max(1f, 2 * Mathf.Abs(rb.velocity.x) / (Mathf.Abs(rb.velocity.x) + 10)));
+        animator.SetFloat("RunSpeed",Mathf.Max(1f, Mathf.Abs(rb.velocity.x/15)));
     }
 
     private void GetSlope(){

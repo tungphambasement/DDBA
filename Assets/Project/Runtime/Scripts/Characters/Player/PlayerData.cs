@@ -118,6 +118,15 @@ public class PlayerData : MonoBehaviour
     public PlayerDash playerDash { get; private set;}
     #endregion
 
+    #region Skills
+    public EnergyBeamController energyBeamController;
+    #endregion
+
+    #region Trackers
+    [Header("Trackers")]
+    public Transform handTracker;
+    #endregion 
+
     private void Init()
     {
         movementSpeed = constData.movementSpeed;
