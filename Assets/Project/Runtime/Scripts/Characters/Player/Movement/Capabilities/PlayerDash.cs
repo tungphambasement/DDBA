@@ -82,7 +82,7 @@ public class PlayerDash : PlayerBaseMovement
     public void StopDashCharacter(){
         data.StopCoroutine(stopRoutine);
         if(dashRoutine != null) data.StopCoroutine(dashRoutine);
-        rb.drag = 0.3f;
+        rb.drag = 0f;
         data.canMove = true;
         data.isDashing = false;
         customGravity.useGravity = true;

@@ -152,7 +152,6 @@ public class PlayerMove : PlayerBaseMovement
         //Debug.Log(newVerticalVelocity + " " + lastVerticalVelocity);
         rb.velocity += new Vector2(0, newVerticalVelocity - lastVerticalVelocity);
         Collider2D[] climbHits = new Collider2D[10];
-        //Debug.Log(Vector2.up*Mathf.Sign(data.movementInput.y));
         climbHits = Physics2D.OverlapBoxAll(
             rb.position + data.playerHitbox.offset + Vector2.up*Mathf.Sign(data.movementInput.y) * data.playerHitbox.size.y * 1/2, 
             new Vector2(data.playerHitbox.size.x-0.1f,0.1f),

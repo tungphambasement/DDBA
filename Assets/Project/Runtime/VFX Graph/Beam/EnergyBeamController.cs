@@ -7,7 +7,8 @@ using UnityEngine.VFX;
 public class EnergyBeamController : MonoBehaviour
 {
     [field: SerializeField]
-    public VisualEffect beamFX {get; private set;}
+    public List<EnergyController> energyFXs;
+
     [field: SerializeField]
     public VisualEffect ballFX {get; private set;}
 
@@ -29,28 +30,32 @@ public class EnergyBeamController : MonoBehaviour
         if(ToUpdate != null || shootRoutine != null ) return; 
         chargeTime = 0f;
         isActive = true;
-        beamFX.SendEvent("OnPlay");
+        foreach(EnergyController ec in energyFXs){
+            ec.StartCharge();
+        }
         ballFX.SendEvent("OnPlay");
         ballFX.SetBool("IsActive", true);
         ballFX.SetBool("Charging", true);
-        beamFX.SetBool("Charging", true);
         ballFX.SetBool("Shooting",false);
-        beamFX.SetBool("Shooting",false);
         ballFX.SetBool("Shoot", false);
-        beamFX.SetVector3("Arc Transform",ballFX.transform.position-transform.position);
         ToUpdate += ChargeUpdate;
         timeStart = (float)Time.timeAsDouble;
     }
 
     public void StopCharge(){
+        foreach(EnergyController ec in energyFXs){
+            ec.StopCharge();
+        }
         ballFX.SetBool("Charging", false);
-        beamFX.SetBool("Charging", false);
         ballFX.SetBool("IsActive", false);
         ToUpdate -= ChargeUpdate;
         isActive = false;
     }
 
     public void Shoot(){
+        foreach(EnergyController ec in energyFXs){
+            ec.Shoot();
+        }
         ballFX.SetBool("IsActive", true);
         shootRoutine = StartCoroutine(ShootCoroutine());
         isActive = true;
@@ -74,12 +79,10 @@ public class EnergyBeamController : MonoBehaviour
         ballFX.SetBool("Shoot",true);
         yield return new WaitForSeconds(0.075f);
         ballFX.SetBool("Shooting", true);
-        beamFX.SetBool("Shooting", true);
         ballFX.SetFloat("Ball Flutter",10f);
         yield return new WaitForSeconds(0.075f);
         ballFX.SetBool("Shoot",false);
         yield return new WaitForSeconds(2f);
-        beamFX.SendEvent("OnStop");
         ballFX.SendEvent("OnStop");
         isActive = false;
         ballFX.SetBool("IsActive", false);
