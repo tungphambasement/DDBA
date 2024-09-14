@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "com.harumak.urpgrabpass": "https://github.com/Haruma-K/URPGrabPass.git?path=/Assets/URPGrabPass",
+    "com.unity.addressables": "1.21.21",
     "com.unity.cinemachine": "2.10.0",
     "com.unity.collab-proxy": "2.3.1",
     "com.unity.feature.2d": "2.0.1",

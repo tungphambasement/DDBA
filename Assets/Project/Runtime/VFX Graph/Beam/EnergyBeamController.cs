@@ -79,7 +79,6 @@ public class EnergyBeamController : MonoBehaviour
         ballFX.SetBool("Shoot",true);
         yield return new WaitForSeconds(0.075f);
         ballFX.SetBool("Shooting", true);
-        ballFX.SetFloat("Ball Flutter",10f);
         yield return new WaitForSeconds(0.075f);
         ballFX.SetBool("Shoot",false);
         yield return new WaitForSeconds(2f);

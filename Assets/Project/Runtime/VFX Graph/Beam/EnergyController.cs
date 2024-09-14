@@ -8,7 +8,7 @@ using UnityEngine.VFX;
 public class EnergyController : MonoBehaviour
 {
     [field: SerializeField]
-    public VisualEffect beamFX {get; private set;}
+    public VisualEffect energyFX{get; private set;}
 
     [SerializeField]
     private float maxChargeTime = 1.5f, maxBallSize = 0.8f, majorArcIni = 1.25f, minorArcIni = 0.75f;
@@ -22,13 +22,14 @@ public class EnergyController : MonoBehaviour
     public void StartCharge(){
         if(ToUpdate != null || shootRoutine != null ) return; 
         isActive = true;
-        beamFX.SendEvent("OnPlay");
-        beamFX.SetBool("Charging", true);
-        beamFX.SetBool("Shooting",false);
+        energyFX.SendEvent("OnPlay");
+        energyFX.SetBool("Charging", true);
+        energyFX.SetBool("Shooting",false);
+        energyFX.SetBool("End", false);
     }
 
     public void StopCharge(){
-        beamFX.SetBool("Charging", false);
+        energyFX.SetBool("Charging", false);
         isActive = false;
     }
 
@@ -43,10 +44,10 @@ public class EnergyController : MonoBehaviour
 
     private IEnumerator ShootCoroutine(){
         yield return new WaitForSeconds(0.075f);
-        beamFX.SetBool("Shooting", true);
         yield return new WaitForSeconds(0.075f);
         yield return new WaitForSeconds(2f);
-        beamFX.SendEvent("OnStop");
+        energyFX.SendEvent("OnStop");
+        energyFX.SetBool("End", true);
         isActive = false;
         shootRoutine = null;
     }

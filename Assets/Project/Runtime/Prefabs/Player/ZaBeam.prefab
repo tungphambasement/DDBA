@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 7865784596426231235}
   - component: {fileID: 8691403193428102765}
   - component: {fileID: 7922891988570315681}
+  - component: {fileID: 7957549316895201828}
+  - component: {fileID: 3666760471762733378}
   m_Layer: 0
   m_Name: Beam
   m_TagString: Untagged
@@ -47,7 +49,7 @@ VisualEffect:
   m_InitialEventNameOverriden: 1
   m_StartSeed: 0
   m_ResetSeedOnPlay: 0
-  m_AllowInstancing: 1
+  m_AllowInstancing: 0
   m_ResourceVersion: 1
   m_PropertySheet:
     m_Float:
@@ -61,16 +63,16 @@ VisualEffect:
       - m_Value: 3
         m_Name: EnergySpeed
         m_Overridden: 1
-      - m_Value: 0.25
+      - m_Value: 0.05
         m_Name: EneryDelay
         m_Overridden: 1
       - m_Value: 0.8
         m_Name: MaxBallSize
         m_Overridden: 1
-      - m_Value: 0.75
+      - m_Value: 1
         m_Name: Arc Torus_torus_minorRadius
-        m_Overridden: 1
-      - m_Value: 1.5
+        m_Overridden: 0
+      - m_Value: 5
         m_Name: Arc Torus_torus_majorRadius
         m_Overridden: 1
       - m_Value: 6.28
@@ -79,10 +81,49 @@ VisualEffect:
       - m_Value: 1.5
         m_Name: MaxSizeChargeTime
         m_Overridden: 1
+      - m_Value: 5
+        m_Name: majorRadius
+        m_Overridden: 1
+      - m_Value: 1
+        m_Name: minorRadius
+        m_Overridden: 1
+      - m_Value: 0.05
+        m_Name: Initial Size
+        m_Overridden: 1
+      - m_Value: 2
+        m_Name: Speed
+        m_Overridden: 1
     m_Vector2f:
       m_Array: []
     m_Vector3f:
-      m_Array: []
+      m_Array:
+      - m_Value: {x: -0, y: 0, z: 0}
+        m_Name: Transform_angles
+        m_Overridden: 1
+      - m_Value: {x: -87.84, y: -30.1, z: 0}
+        m_Name: Transform_position
+        m_Overridden: 1
+      - m_Value: {x: 1, y: 1, z: 1}
+        m_Name: Transform_scale
+        m_Overridden: 1
+      - m_Value: {x: -0, y: 0, z: 0}
+        m_Name: Arc Transform_angles
+        m_Overridden: 1
+      - m_Value: {x: -94.331, y: -29.489, z: 0}
+        m_Name: Arc Transform_position
+        m_Overridden: 1
+      - m_Value: {x: 1, y: 1, z: 1}
+        m_Name: Arc Transform_scale
+        m_Overridden: 1
+      - m_Value: {x: -0, y: 0, z: 0}
+        m_Name: SourceTransform_angles
+        m_Overridden: 1
+      - m_Value: {x: -80.06, y: -18.73, z: 20}
+        m_Name: SourceTransform_position
+        m_Overridden: 1
+      - m_Value: {x: 1, y: 1, z: 1}
+        m_Name: SourceTransform_scale
+        m_Overridden: 1
     m_Vector4f:
       m_Array: []
     m_Uint:
@@ -149,7 +190,7 @@ VFXRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1630425631
-  m_SortingLayer: 9
+  m_SortingLayer: 8
   m_SortingOrder: 0
 --- !u!95 &7922891988570315681
 Animator:
@@ -172,6 +213,39 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7957549316895201828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1939933681407103228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdafc37f32b176349b1684c4455b98e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ExecuteInEditor: 1
+  m_Bindings: []
+  m_VisualEffect: {fileID: 7865784596426231235}
+--- !u!114 &3666760471762733378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1939933681407103228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9cd598bca9f9514783343f02b91a4f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <energyFX>k__BackingField: {fileID: 7865784596426231235}
+  maxChargeTime: 1.5
+  maxBallSize: 0.8
+  majorArcIni: 1.25
+  minorArcIni: 0.75
+  isActive: 0
 --- !u!1 &2874110184260260831
 GameObject:
   m_ObjectHideFlags: 0
@@ -205,6 +279,8 @@ Transform:
   m_Children:
   - {fileID: 8947847550887861202}
   - {fileID: 2460192463367471988}
+  - {fileID: 1742960749501028220}
+  - {fileID: 6943211919546537960}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &6355775758021968914
@@ -240,8 +316,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4084c3494e80d8148957f3fb48c302e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  beamFX: {fileID: 7865784596426231235}
-  ballFX: {fileID: 0}
+  energyFXs:
+  - {fileID: 0}
+  - {fileID: 8938747622027932036}
+  - {fileID: 3225586029114149950}
+  <ballFX>k__BackingField: {fileID: 0}
   DistortionGrowthAC:
     serializedVersion: 2
     m_Curve: []
@@ -251,6 +330,286 @@ MonoBehaviour:
   maxChargeTime: 1.75
   maxBallSize: 0.8
   majorArcIni: 2
+  minorArcIni: 0.75
+  isActive: 0
+--- !u!1 &4595413600547946691
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5255711882252226816}
+  - component: {fileID: 7582787560245232160}
+  - component: {fileID: 2288745755685501258}
+  - component: {fileID: 5084666602329603493}
+  - component: {fileID: 5508585109614499669}
+  - component: {fileID: 8478746234155470082}
+  - component: {fileID: 5498391735617830469}
+  - component: {fileID: 8938747622027932036}
+  m_Layer: 0
+  m_Name: Energy1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5255711882252226816
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4595413600547946691}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 20}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1742960749501028220}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!2083052967 &7582787560245232160
+VisualEffect:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4595413600547946691}
+  m_Enabled: 1
+  m_Asset: {fileID: 8926484042661614526, guid: eeb1d82655754834ab137fd36891fa38, type: 3}
+  m_InitialEventName: 
+  m_InitialEventNameOverriden: 1
+  m_StartSeed: 0
+  m_ResetSeedOnPlay: 0
+  m_AllowInstancing: 0
+  m_ResourceVersion: 1
+  m_PropertySheet:
+    m_Float:
+      m_Array:
+      - m_Value: 0.005
+        m_Name: Ball Flutter
+        m_Overridden: 1
+      - m_Value: 1.5
+        m_Name: Ball Freq
+        m_Overridden: 1
+      - m_Value: 3
+        m_Name: EnergySpeed
+        m_Overridden: 1
+      - m_Value: 0.05
+        m_Name: EneryDelay
+        m_Overridden: 1
+      - m_Value: 0.8
+        m_Name: MaxBallSize
+        m_Overridden: 1
+      - m_Value: 1
+        m_Name: Arc Torus_torus_minorRadius
+        m_Overridden: 0
+      - m_Value: 5
+        m_Name: Arc Torus_torus_majorRadius
+        m_Overridden: 1
+      - m_Value: 6.28
+        m_Name: Arc Torus_arc
+        m_Overridden: 1
+      - m_Value: 1.5
+        m_Name: MaxSizeChargeTime
+        m_Overridden: 1
+      - m_Value: 10
+        m_Name: majorRadius
+        m_Overridden: 1
+      - m_Value: 2
+        m_Name: minorRadius
+        m_Overridden: 1
+      - m_Value: 0.05
+        m_Name: Initial Size
+        m_Overridden: 1
+      - m_Value: 2
+        m_Name: Speed
+        m_Overridden: 1
+    m_Vector2f:
+      m_Array: []
+    m_Vector3f:
+      m_Array:
+      - m_Value: {x: -0, y: 0, z: 0}
+        m_Name: Transform_angles
+        m_Overridden: 1
+      - m_Value: {x: -87.84, y: -30.1, z: 0}
+        m_Name: Transform_position
+        m_Overridden: 1
+      - m_Value: {x: 1, y: 1, z: 1}
+        m_Name: Transform_scale
+        m_Overridden: 1
+      - m_Value: {x: -0, y: 0, z: 0}
+        m_Name: Arc Transform_angles
+        m_Overridden: 1
+      - m_Value: {x: -94.331, y: -29.489, z: 0}
+        m_Name: Arc Transform_position
+        m_Overridden: 1
+      - m_Value: {x: 1, y: 1, z: 1}
+        m_Name: Arc Transform_scale
+        m_Overridden: 1
+      - m_Value: {x: -0, y: 0, z: 0}
+        m_Name: SourceTransform_angles
+        m_Overridden: 1
+      - m_Value: {x: -87.84, y: -30.1, z: 20}
+        m_Name: SourceTransform_position
+        m_Overridden: 1
+      - m_Value: {x: 1, y: 1, z: 1}
+        m_Name: SourceTransform_scale
+        m_Overridden: 1
+    m_Vector4f:
+      m_Array: []
+    m_Uint:
+      m_Array: []
+    m_Int:
+      m_Array:
+      - m_Value: 8
+        m_Name: Energy
+        m_Overridden: 1
+    m_Matrix4x4f:
+      m_Array: []
+    m_AnimationCurve:
+      m_Array: []
+    m_Gradient:
+      m_Array: []
+    m_NamedObject:
+      m_Array: []
+    m_Bool:
+      m_Array:
+      - m_Value: 0
+        m_Name: Charging
+        m_Overridden: 1
+      - m_Value: 0
+        m_Name: Shoot
+        m_Overridden: 1
+      - m_Value: 0
+        m_Name: Shooting
+        m_Overridden: 1
+--- !u!73398921 &2288745755685501258
+VFXRenderer:
+  serializedVersion: 1
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4595413600547946691}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 1630425631
+  m_SortingLayer: 8
+  m_SortingOrder: 0
+--- !u!95 &5084666602329603493
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4595413600547946691}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e30c721cf5db83641aa21000c463f552, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5508585109614499669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4595413600547946691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdafc37f32b176349b1684c4455b98e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ExecuteInEditor: 1
+  m_Bindings:
+  - {fileID: 8478746234155470082}
+  - {fileID: 5498391735617830469}
+  m_VisualEffect: {fileID: 7582787560245232160}
+--- !u!114 &8478746234155470082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4595413600547946691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fdfea1f838247c40921a07afedde962, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Property:
+    m_Name: Arc Transform
+  Target: {fileID: 0}
+--- !u!114 &5498391735617830469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4595413600547946691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fdfea1f838247c40921a07afedde962, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Property:
+    m_Name: SourceTransform
+  Target: {fileID: 5255711882252226816}
+--- !u!114 &8938747622027932036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4595413600547946691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9cd598bca9f9514783343f02b91a4f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <energyFX>k__BackingField: {fileID: 0}
+  maxChargeTime: 1.5
+  maxBallSize: 0.8
+  majorArcIni: 1.25
   minorArcIni: 0.75
   isActive: 0
 --- !u!1 &4907424134071720951
@@ -325,7 +684,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1934017249
-  m_SortingLayer: 8
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 11f5eaf6797ca6f40a7106e0e0d0a573, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -359,3 +718,413 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!1 &5486494942986936599
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1742960749501028220}
+  - component: {fileID: 8689118599113366344}
+  - component: {fileID: 3323995725098653903}
+  m_Layer: 0
+  m_Name: Ball
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1742960749501028220
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5486494942986936599}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5255711882252226816}
+  m_Father: {fileID: 6541169839199331200}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!2083052967 &8689118599113366344
+VisualEffect:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5486494942986936599}
+  m_Enabled: 1
+  m_Asset: {fileID: 8926484042661614526, guid: 99d6fea3b0558054b917b84ef2386f68, type: 3}
+  m_InitialEventName: 
+  m_InitialEventNameOverriden: 1
+  m_StartSeed: 0
+  m_ResetSeedOnPlay: 1
+  m_AllowInstancing: 0
+  m_ResourceVersion: 1
+  m_PropertySheet:
+    m_Float:
+      m_Array:
+      - m_Value: 2
+        m_Name: majorRadius
+        m_Overridden: 1
+      - m_Value: 2
+        m_Name: minorRadius
+        m_Overridden: 1
+      - m_Value: 0.1
+        m_Name: Initial Size
+        m_Overridden: 1
+      - m_Value: 1
+        m_Name: Ball Flutter
+        m_Overridden: 1
+      - m_Value: 2
+        m_Name: Ball Freq
+        m_Overridden: 1
+      - m_Value: 1
+        m_Name: MaxBallSize
+        m_Overridden: 1
+    m_Vector2f:
+      m_Array: []
+    m_Vector3f:
+      m_Array: []
+    m_Vector4f:
+      m_Array: []
+    m_Uint:
+      m_Array: []
+    m_Int:
+      m_Array: []
+    m_Matrix4x4f:
+      m_Array: []
+    m_AnimationCurve:
+      m_Array: []
+    m_Gradient:
+      m_Array: []
+    m_NamedObject:
+      m_Array: []
+    m_Bool:
+      m_Array: []
+--- !u!73398921 &3323995725098653903
+VFXRenderer:
+  serializedVersion: 1
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5486494942986936599}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 1276417777
+  m_SortingLayer: 6
+  m_SortingOrder: 0
+--- !u!1 &8034779867583620704
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6943211919546537960}
+  - component: {fileID: 2674424386425499434}
+  - component: {fileID: 8257790481913672221}
+  - component: {fileID: 6806440827310194885}
+  - component: {fileID: 7973727033266002351}
+  - component: {fileID: 941438017432604140}
+  - component: {fileID: 2587794919026091703}
+  - component: {fileID: 3225586029114149950}
+  m_Layer: 0
+  m_Name: Energy2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6943211919546537960
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8034779867583620704}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -7.7, y: -12.44, z: 20}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6541169839199331200}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!2083052967 &2674424386425499434
+VisualEffect:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8034779867583620704}
+  m_Enabled: 1
+  m_Asset: {fileID: 8926484042661614526, guid: eeb1d82655754834ab137fd36891fa38, type: 3}
+  m_InitialEventName: 
+  m_InitialEventNameOverriden: 1
+  m_StartSeed: 0
+  m_ResetSeedOnPlay: 0
+  m_AllowInstancing: 0
+  m_ResourceVersion: 1
+  m_PropertySheet:
+    m_Float:
+      m_Array:
+      - m_Value: 0.005
+        m_Name: Ball Flutter
+        m_Overridden: 1
+      - m_Value: 1.5
+        m_Name: Ball Freq
+        m_Overridden: 1
+      - m_Value: 3
+        m_Name: EnergySpeed
+        m_Overridden: 1
+      - m_Value: 0.05
+        m_Name: EneryDelay
+        m_Overridden: 1
+      - m_Value: 0.8
+        m_Name: MaxBallSize
+        m_Overridden: 1
+      - m_Value: 1
+        m_Name: Arc Torus_torus_minorRadius
+        m_Overridden: 0
+      - m_Value: 5
+        m_Name: Arc Torus_torus_majorRadius
+        m_Overridden: 1
+      - m_Value: 6.28
+        m_Name: Arc Torus_arc
+        m_Overridden: 1
+      - m_Value: 1.5
+        m_Name: MaxSizeChargeTime
+        m_Overridden: 1
+      - m_Value: 5
+        m_Name: majorRadius
+        m_Overridden: 1
+      - m_Value: 1
+        m_Name: minorRadius
+        m_Overridden: 1
+      - m_Value: 0.05
+        m_Name: Initial Size
+        m_Overridden: 1
+      - m_Value: 2
+        m_Name: Speed
+        m_Overridden: 1
+    m_Vector2f:
+      m_Array: []
+    m_Vector3f:
+      m_Array:
+      - m_Value: {x: -0, y: 0, z: 0}
+        m_Name: Transform_angles
+        m_Overridden: 1
+      - m_Value: {x: -87.84, y: -30.1, z: 0}
+        m_Name: Transform_position
+        m_Overridden: 1
+      - m_Value: {x: 1, y: 1, z: 1}
+        m_Name: Transform_scale
+        m_Overridden: 1
+      - m_Value: {x: -0, y: 0, z: 0}
+        m_Name: Arc Transform_angles
+        m_Overridden: 1
+      - m_Value: {x: -94.331, y: -29.489, z: 0}
+        m_Name: Arc Transform_position
+        m_Overridden: 1
+      - m_Value: {x: 1, y: 1, z: 1}
+        m_Name: Arc Transform_scale
+        m_Overridden: 1
+      - m_Value: {x: -0, y: 0, z: 0}
+        m_Name: SourceTransform_angles
+        m_Overridden: 1
+      - m_Value: {x: -95.53999, y: -42.54, z: 20}
+        m_Name: SourceTransform_position
+        m_Overridden: 1
+      - m_Value: {x: 1, y: 1, z: 1}
+        m_Name: SourceTransform_scale
+        m_Overridden: 1
+    m_Vector4f:
+      m_Array: []
+    m_Uint:
+      m_Array: []
+    m_Int:
+      m_Array:
+      - m_Value: 8
+        m_Name: Energy
+        m_Overridden: 1
+    m_Matrix4x4f:
+      m_Array: []
+    m_AnimationCurve:
+      m_Array: []
+    m_Gradient:
+      m_Array: []
+    m_NamedObject:
+      m_Array: []
+    m_Bool:
+      m_Array:
+      - m_Value: 0
+        m_Name: Charging
+        m_Overridden: 1
+      - m_Value: 0
+        m_Name: Shoot
+        m_Overridden: 1
+      - m_Value: 0
+        m_Name: Shooting
+        m_Overridden: 1
+--- !u!73398921 &8257790481913672221
+VFXRenderer:
+  serializedVersion: 1
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8034779867583620704}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 1630425631
+  m_SortingLayer: 8
+  m_SortingOrder: 0
+--- !u!95 &6806440827310194885
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8034779867583620704}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e30c721cf5db83641aa21000c463f552, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7973727033266002351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8034779867583620704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdafc37f32b176349b1684c4455b98e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ExecuteInEditor: 1
+  m_Bindings:
+  - {fileID: 941438017432604140}
+  - {fileID: 2587794919026091703}
+  m_VisualEffect: {fileID: 2674424386425499434}
+--- !u!114 &941438017432604140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8034779867583620704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fdfea1f838247c40921a07afedde962, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Property:
+    m_Name: Arc Transform
+  Target: {fileID: 0}
+--- !u!114 &2587794919026091703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8034779867583620704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fdfea1f838247c40921a07afedde962, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Property:
+    m_Name: SourceTransform
+  Target: {fileID: 6943211919546537960}
+--- !u!114 &3225586029114149950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8034779867583620704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9cd598bca9f9514783343f02b91a4f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <energyFX>k__BackingField: {fileID: 0}
+  maxChargeTime: 1.5
+  maxBallSize: 0.8
+  majorArcIni: 1.25
+  minorArcIni: 0.75
+  isActive: 0

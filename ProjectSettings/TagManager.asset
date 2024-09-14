@@ -55,14 +55,11 @@ TagManager:
   - name: GroundBack
     uniqueID: 530393251
     locked: 0
+  - name: Object
+    uniqueID: 1349605113
+    locked: 0
   - name: Player
     uniqueID: 1276417777
-    locked: 0
-  - name: Ground
-    uniqueID: 2201813451
-    locked: 0
-  - name: Decor
-    uniqueID: 1245948405
     locked: 0
   - name: Highest Layer For Distortion Effect
     uniqueID: 1934017249
