@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Callbacks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,11 +8,14 @@ public class PlayerController : Controller
 {
     private float currentHealth;
 
-    public float Health { 
-        get{
+    public float Health
+    {
+        get
+        {
             return currentHealth;
         }
-        private set{
+        private set
+        {
             healthBar?.SetHealth(value);
             currentHealth = value;
         }
@@ -22,7 +24,7 @@ public class PlayerController : Controller
     //UI Display
     HealthBar healthBar => data.healthBar;
 
-    private Dictionary<IInteractable,bool> nearby_interactables;
+    private Dictionary<IInteractable, bool> nearby_interactables;
     private IInteractable it_interactables;
 
     #region ComponentsVariables
@@ -64,10 +66,12 @@ public class PlayerController : Controller
         }
     }
 
-    private void AnimationRetrieveAll(){
+    private void AnimationRetrieveAll()
+    {
         data.anims = new();
-        foreach(AnimationClip clip in data.animator.runtimeAnimatorController.animationClips){
-            data.anims.Add(clip.name,clip);
+        foreach (AnimationClip clip in data.animator.runtimeAnimatorController.animationClips)
+        {
+            data.anims.Add(clip.name, clip);
         }
     }
 
@@ -93,16 +97,19 @@ public class PlayerController : Controller
         }
     }
 
-    public void Interact(){
-        if(it_interactables != null) 
-           it_interactables.OnInteract(this);
+    public void Interact()
+    {
+        if (it_interactables != null)
+            it_interactables.OnInteract(this);
     }
 
-    public void AddInteractable(IInteractable interactable){
-        nearby_interactables.Add(interactable,true);
+    public void AddInteractable(IInteractable interactable)
+    {
+        nearby_interactables.Add(interactable, true);
     }
 
-    public void RemoveInteractable(IInteractable interactable){
+    public void RemoveInteractable(IInteractable interactable)
+    {
         nearby_interactables.Remove(interactable);
     }
 }

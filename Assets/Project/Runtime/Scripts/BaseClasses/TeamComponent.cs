@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -27,7 +25,7 @@ public class TeamComponent : MonoBehaviour
 
             _teamIndex = value;
 
-           
+
         }
         get { return _teamIndex; }
     }

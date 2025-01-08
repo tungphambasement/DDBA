@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class ObjectPool<T>
 {
@@ -10,7 +9,7 @@ public class ObjectPool<T>
     private readonly Action<T> _turnOnCallback;
     private readonly Action<T> _turnOffCallback;
 
-    public ObjectPool(Func<T> factoryMethod, Action<T> turnOnCallback , Action<T> turnOffCallback, int initialStock = 1, bool isDynamic = true)
+    public ObjectPool(Func<T> factoryMethod, Action<T> turnOnCallback, Action<T> turnOffCallback, int initialStock = 1, bool isDynamic = true)
     {
         _factoryMethod = factoryMethod;
         _isDynamic = isDynamic;

@@ -1,8 +1,5 @@
 using System.Collections.Generic;
-using System.Data.Common;
-using Codice.Client.Common;
 using UnityEngine;
-using UnityEngine.VFX;
 
 public class PlayerData : MonoBehaviour
 {
@@ -54,7 +51,7 @@ public class PlayerData : MonoBehaviour
     public float dashTime;
     public float afterImageDistance;
     #endregion
-    
+
     #region Crouch
     #endregion
 
@@ -113,9 +110,9 @@ public class PlayerData : MonoBehaviour
     #endregion
 
     #region Movement Capabilities
-    public PlayerMove playerMove { get; private set;}
-    public PlayerJump playerJump { get; private set;}
-    public PlayerDash playerDash { get; private set;}
+    public PlayerMove playerMove { get; private set; }
+    public PlayerJump playerJump { get; private set; }
+    public PlayerDash playerDash { get; private set; }
     #endregion
 
     #region Skills
@@ -145,15 +142,18 @@ public class PlayerData : MonoBehaviour
         playerDash = new PlayerDash(this);
     }
 
-    public void ResetJumpsCount(){
+    public void ResetJumpsCount()
+    {
         jumpsLeft = numberOfJumps;
     }
-    
-    public void ResetCoyoteTime(){
+
+    public void ResetCoyoteTime()
+    {
         coyoteTime = constData.coyoteTime;
     }
 
-    public bool isWallAhead(){
+    public bool isWallAhead()
+    {
         return movementController.isWallAhead();
     }
 

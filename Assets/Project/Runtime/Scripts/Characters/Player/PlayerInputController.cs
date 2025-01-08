@@ -1,7 +1,5 @@
 using UnityEngine;
-using System;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Interactions;
 
 
 public class PlayerInputController : MonoBehaviour
@@ -43,7 +41,7 @@ public class PlayerInputController : MonoBehaviour
         //Cast
         _playerInputAction.Player.Beam.started += Cast_Started;
         _playerInputAction.Player.Beam.canceled += Cast_Cancelled;
-       
+
     }
 
     private void Movement_Performed(InputAction.CallbackContext context)
@@ -74,7 +72,8 @@ public class PlayerInputController : MonoBehaviour
         playerMovementController.OnJump();
     }
 
-    private void Jump_Canceled(InputAction.CallbackContext context){
+    private void Jump_Canceled(InputAction.CallbackContext context)
+    {
         playerMovementController.ReleaseJump();
     }
 
@@ -89,19 +88,23 @@ public class PlayerInputController : MonoBehaviour
         playerMovementController.UseSlide();
     }
 
-    private void UseBoost_Performed(InputAction.CallbackContext context){
+    private void UseBoost_Performed(InputAction.CallbackContext context)
+    {
         playerMovementController.UseDash();
     }
 
-    private void Cast_Started(InputAction.CallbackContext context){
+    private void Cast_Started(InputAction.CallbackContext context)
+    {
         playerCombatController.OnCast_Performed();
     }
 
-    private void Cast_Performed(){
+    private void Cast_Performed()
+    {
 
     }
 
-    private void Cast_Cancelled(InputAction.CallbackContext context){
+    private void Cast_Cancelled(InputAction.CallbackContext context)
+    {
         playerCombatController.OnCast_Released();
     }
 }

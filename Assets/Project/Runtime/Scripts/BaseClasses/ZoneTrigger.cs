@@ -7,15 +7,17 @@ public abstract class ZoneTrigger : MonoBehaviour
     [SerializeField] protected UnityEvent onTriggerEnter, onTriggerExit;
     public abstract bool CanTrigger(Collider2D other);
 
-    protected void OnTriggerEnter2D(Collider2D other){
-        if(!CanTrigger(other)) return;
+    protected void OnTriggerEnter2D(Collider2D other)
+    {
+        if (!CanTrigger(other)) return;
         FireEnterEvent(other);
     }
 
     public abstract void FireEnterEvent(Collider2D other);
 
-    protected void OnTriggerExit2D(Collider2D other){
-        if(!CanTrigger(other)) return;
+    protected void OnTriggerExit2D(Collider2D other)
+    {
+        if (!CanTrigger(other)) return;
         FireExitEvent(other);
     }
 

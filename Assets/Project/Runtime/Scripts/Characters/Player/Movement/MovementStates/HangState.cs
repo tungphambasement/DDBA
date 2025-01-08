@@ -3,7 +3,7 @@ using UnityEngine;
 public class HangState : PlayerBaseMovementState
 {
     PlayerMove playerMove => data.playerMove;
-    
+
     public override void Init(PlayerData data)
     {
         base.Init(data);
@@ -35,7 +35,7 @@ public class HangState : PlayerBaseMovementState
     public override void OnExit()
     {
         base.OnExit();
-        
+
 
     }
 }

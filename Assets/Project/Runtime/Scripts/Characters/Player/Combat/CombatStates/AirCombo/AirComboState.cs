@@ -9,14 +9,14 @@ public class AirComboState : MeleeBaseState
         base.OnEnter();
         animationManager.AddAnim(3, animation_name);
         //Attack
-        duration = data.anims[animation_name].length/attackSpeed;
+        duration = data.anims[animation_name].length / attackSpeed;
         Debug.Log("Player Air Attack " + attackIndex + " Fired!");
     }
 
     public override void OnHandle()
     {
         base.OnHandle();
-        rb.AddForce(new Vector2(0f,8f),ForceMode2D.Force);
+        rb.AddForce(new Vector2(0f, 8f), ForceMode2D.Force);
     }
 
     public override void OnExit()

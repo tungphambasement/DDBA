@@ -17,5 +17,5 @@ public class KinematicHandler : MonoBehaviour
     w^2 = w0^2 +2*a*theta
     */
 
-    
+
 }

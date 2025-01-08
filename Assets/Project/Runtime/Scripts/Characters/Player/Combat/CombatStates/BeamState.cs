@@ -3,7 +3,7 @@ using UnityEngine;
 public class BeamState : MeleeBaseState
 {
     private bool startingUp;
-    
+
     private bool isCasting;
 
     private EnergyBeamController energyBeamController => data.energyBeamController;
@@ -29,13 +29,18 @@ public class BeamState : MeleeBaseState
         base.OnHandle();
         if (startingUp)
         {
-        }else{
-            if(energyBeamController.isActive == false){
+        }
+        else
+        {
+            if (energyBeamController.isActive == false)
+            {
                 data.isCasting = false;
             }
         }
-        if(data.isCasting){
-            energyBeamController.ballFX.transform.position = new Vector3(handTracker.position.x,handTracker.position.y,handTracker.position.z);
+        if (data.isCasting)
+        {
+
+            energyBeamController.ballFX.transform.position = new Vector3(handTracker.position.x, handTracker.position.y, handTracker.position.z);
         }
     }
 
@@ -43,7 +48,8 @@ public class BeamState : MeleeBaseState
     {
         base.OnCast_Released();
         energyBeamController.StopCharge();
-        if(time >= 0.5f){
+        if (time >= 0.5f)
+        {
             Debug.Log("Shooting Beam");
             startingUp = false;
             animation_name = "CastLoop";
@@ -51,7 +57,9 @@ public class BeamState : MeleeBaseState
             animationManager.AddAnim(3, animation_name);
             duration = data.anims[animation_name].length / attackSpeed;
             energyBeamController.Shoot();
-        }else{
+        }
+        else
+        {
             data.isCasting = false;
             Debug.Log("Beam Cancelled");
         }

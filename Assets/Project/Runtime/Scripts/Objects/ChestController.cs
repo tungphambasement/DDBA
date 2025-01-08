@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class ChestController : MonoBehaviour, IInteractable
 {
@@ -24,18 +21,19 @@ public class ChestController : MonoBehaviour, IInteractable
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-    public void OnOpen(){
+    public void OnOpen()
+    {
         Debug.Log("chest Opened");
-        animator.SetBool("Open",true);
+        animator.SetBool("Open", true);
         enemySpawner.canSpawn = false;
     }
 
     public void OnInteract(Controller eventFiredController)
     {
-        if(!isOpened) OnOpen();
+        if (!isOpened) OnOpen();
     }
 
 

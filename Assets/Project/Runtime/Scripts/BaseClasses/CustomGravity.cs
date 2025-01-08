@@ -18,7 +18,7 @@ public class CustomGravity : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(!useGravity) return;
+        if (!useGravity) return;
         jumpPeakTime = getJumpPeakTime();
         gravityScale += gravAccel;
         Vector2 gravity = -1f * globalGravity * gravityScale * Vector2.up;
@@ -26,8 +26,9 @@ public class CustomGravity : MonoBehaviour
 
     }
 
-    private float getJumpPeakTime(){
-        float res = Mathf.Sqrt((2f*m_rb.velocity.y*gravAccel + globalGravity)/(globalGravity*gravAccel*gravAccel)) - 1f/gravAccel;
+    private float getJumpPeakTime()
+    {
+        float res = Mathf.Sqrt((2f * m_rb.velocity.y * gravAccel + globalGravity) / (globalGravity * gravAccel * gravAccel)) - 1f / gravAccel;
         return res;
     }
 }

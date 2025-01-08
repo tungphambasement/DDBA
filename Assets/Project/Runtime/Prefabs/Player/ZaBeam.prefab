@@ -279,6 +279,7 @@ Transform:
   m_Children:
   - {fileID: 8947847550887861202}
   - {fileID: 2460192463367471988}
+  - {fileID: 5255711882252226816}
   - {fileID: 1742960749501028220}
   - {fileID: 6943211919546537960}
   m_Father: {fileID: 0}
@@ -368,7 +369,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1742960749501028220}
+  m_Father: {fileID: 6541169839199331200}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!2083052967 &7582787560245232160
 VisualEffect:
@@ -452,7 +453,7 @@ VisualEffect:
       - m_Value: {x: -0, y: 0, z: 0}
         m_Name: SourceTransform_angles
         m_Overridden: 1
-      - m_Value: {x: -87.84, y: -30.1, z: 20}
+      - m_Value: {x: -87.84, y: -30.1, z: 0}
         m_Name: SourceTransform_position
         m_Overridden: 1
       - m_Value: {x: 1, y: 1, z: 1}
@@ -593,7 +594,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Property:
     m_Name: SourceTransform
-  Target: {fileID: 5255711882252226816}
+  Target: {fileID: 1742960749501028220}
 --- !u!114 &8938747622027932036
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -622,7 +623,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2460192463367471988}
   - component: {fileID: 6014192660482249830}
-  - component: {fileID: 3641963430042921079}
   m_Layer: 6
   m_Name: DistortionFX
   m_TagString: Untagged
@@ -697,27 +697,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &3641963430042921079
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4907424134071720951}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5486494942986936599
 GameObject:
   m_ObjectHideFlags: 0
@@ -748,8 +727,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 5255711882252226816}
+  m_Children: []
   m_Father: {fileID: 6541169839199331200}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!2083052967 &8689118599113366344
@@ -894,7 +872,7 @@ VisualEffect:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8034779867583620704}
   m_Enabled: 1
-  m_Asset: {fileID: 8926484042661614526, guid: eeb1d82655754834ab137fd36891fa38, type: 3}
+  m_Asset: {fileID: 8926484042661614526, guid: b7ac92468866bc04fa932ec46513ecb6, type: 3}
   m_InitialEventName: 
   m_InitialEventNameOverriden: 1
   m_StartSeed: 0

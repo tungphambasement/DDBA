@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerBaseMovement
@@ -32,6 +31,6 @@ public class PlayerBaseMovement
 
     public virtual void SetUpConstants()
     {
-        
+
     }
 }

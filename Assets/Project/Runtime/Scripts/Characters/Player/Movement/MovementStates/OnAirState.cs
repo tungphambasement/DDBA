@@ -1,14 +1,14 @@
 
 
 using System.Collections;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 
-public class OnAirState : PlayerBaseMovementState{
+public class OnAirState : PlayerBaseMovementState
+{
     PlayerMove playerMove => data.playerMove;
     PlayerJump playerJump => data.playerJump;
     private bool isAirHover => data.AirHover;
-    
+
     public override void Init(PlayerData data)
     {
         base.Init(data);
@@ -24,20 +24,24 @@ public class OnAirState : PlayerBaseMovementState{
     {
         base.OnFixedHandle();
         data.coyoteTime -= Time.fixedDeltaTime;
-        if(rb.velocity.y > 0.1f){
-            if(data.jumpRelease) {
-                customGravity.gravityScale *= (1+data.gravAccel*Time.fixedDeltaTime);
-            }    
+        if (rb.velocity.y > 0.1f)
+        {
+            if (data.jumpRelease)
+            {
+                customGravity.gravityScale *= (1 + data.gravAccel * Time.fixedDeltaTime);
+            }
             data.jumpPhase = 1;
-        }else if(rb.velocity.y < -0.5f){
-            if(IsOutOfCombat()) customGravity.gravityScale *= (1+data.gravAccel*Time.fixedDeltaTime);
+        }
+        else if (rb.velocity.y < -0.5f)
+        {
+            if (IsOutOfCombat()) customGravity.gravityScale *= (1 + data.gravAccel * Time.fixedDeltaTime);
             data.jumpPhase = 2;
             animationManager.SafeRemove(2, "JumpLoop");
             animationManager.SafeRemove(2, "AirFloatLoop");
             //Debug.Log("Added fall");
             animationManager.AddAnim(2, "Fall");
         }
-        customGravity.gravityScale = Mathf.Min(customGravity.gravityScale,data.maxGravityScale);
+        customGravity.gravityScale = Mathf.Min(customGravity.gravityScale, data.maxGravityScale);
     }
 
     public override void OnExit()
@@ -94,7 +98,7 @@ public class OnAirState : PlayerBaseMovementState{
         animationManager.ForceAdd(2, "AirFloatLoop");
         playerJump.ToggleJumpHang(1.2f);
         float AirMoveTime = Time.time;
-        yield return new WaitUntil(()=>(Time.time-AirMoveTime>data.jumpAirMoveTime) || data.groundChecker.isGrounded() );
+        yield return new WaitUntil(() => (Time.time - AirMoveTime > data.jumpAirMoveTime) || data.groundChecker.isGrounded());
 
         //Unhang (Unhover)
         playerJump.ToggleJumpHang(0.2f);
@@ -103,5 +107,5 @@ public class OnAirState : PlayerBaseMovementState{
         data.jumpRelease = false;
         data.JumpRoutine = null;
     }
-    
+
 }

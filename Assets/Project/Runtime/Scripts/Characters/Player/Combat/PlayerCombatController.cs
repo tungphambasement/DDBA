@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 
 public static class ECombat
@@ -62,10 +61,11 @@ public class PlayerCombatController : MonoBehaviour
         SetupTransitions();
     }
 
-    private void SetupTransitions(){
+    private void SetupTransitions()
+    {
         //Melee Entry
         combatMachine.stateTransitions.Add(
-            combatStates[ECombat.MeleeEntryState],new(){
+            combatStates[ECombat.MeleeEntryState], new(){
                 new(()=>data.shouldCombo&&data.groundChecker.isGrounded(), combatStates[ECombat.GroundEntry]),
                 new(()=>data.shouldCombo&&!data.groundChecker.isGrounded(), combatStates[ECombat.AirEntry])
                 }
@@ -73,15 +73,15 @@ public class PlayerCombatController : MonoBehaviour
 
         //Ground Entry
         combatMachine.stateTransitions.Add(
-            combatStates[ECombat.GroundEntry],new(){
+            combatStates[ECombat.GroundEntry], new(){
                 new(()=>data.shouldCombo, combatStates[ECombat.GroundCombo]),
                 new(()=>combatStates[ECombat.GroundEntry].time >= combatStates[ECombat.GroundEntry].duration, combatStates[ECombat.MeleeEntryState])
                 }
         );
-        
+
         //Ground Combo
         combatMachine.stateTransitions.Add(
-            combatStates[ECombat.GroundCombo],new(){
+            combatStates[ECombat.GroundCombo], new(){
                 new(()=>data.shouldCombo, combatStates[ECombat.GroundFinisher]),
                 new(()=>combatStates[ECombat.GroundCombo].time >= combatStates[ECombat.GroundCombo].duration, combatStates[ECombat.MeleeEntryState])
                 }
@@ -89,22 +89,22 @@ public class PlayerCombatController : MonoBehaviour
 
         //Ground Finisher
         combatMachine.stateTransitions.Add(
-            combatStates[ECombat.GroundFinisher],new(){
+            combatStates[ECombat.GroundFinisher], new(){
                 new(()=>combatStates[ECombat.GroundFinisher].time >= combatStates[ECombat.GroundFinisher].duration, combatStates[ECombat.MeleeEntryState])
                 }
         );
 
         //Air Entry
         combatMachine.stateTransitions.Add(
-            combatStates[ECombat.AirEntry],new(){
+            combatStates[ECombat.AirEntry], new(){
                 new(()=>data.shouldCombo, combatStates[ECombat.AirCombo]),
                 new(()=>combatStates[ECombat.AirEntry].time >= combatStates[ECombat.AirEntry].duration, combatStates[ECombat.MeleeEntryState])
                 }
         );
-        
+
         //Air Combo
         combatMachine.stateTransitions.Add(
-            combatStates[ECombat.AirCombo],new(){
+            combatStates[ECombat.AirCombo], new(){
                 new(()=>data.shouldCombo, combatStates[ECombat.AirFinisher]),
                 new(()=>combatStates[ECombat.AirCombo].time >= combatStates[ECombat.AirCombo].duration, combatStates[ECombat.MeleeEntryState])
                 }
@@ -112,18 +112,18 @@ public class PlayerCombatController : MonoBehaviour
 
         //Air Finisher
         combatMachine.stateTransitions.Add(
-            combatStates[ECombat.AirFinisher],new(){
+            combatStates[ECombat.AirFinisher], new(){
                 new(data.groundChecker.isGrounded, combatStates[ECombat.MeleeEntryState])
                 }
         );
 
         //Beam Cast
         combatMachine.stateTransitions.Add(
-            combatStates[ECombat.Beam],new(){
+            combatStates[ECombat.Beam], new(){
                 new(()=>!data.isCasting, combatStates[ECombat.MeleeEntryState])
                 }
         );
-    }   
+    }
 
     private void SetupStateBehavior()
     {

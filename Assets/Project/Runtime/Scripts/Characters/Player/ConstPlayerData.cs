@@ -24,7 +24,7 @@ public class ConstPlayerData : ScriptableObject
     [Header("Combat Constants")]
     public float CombatCD = 5f;
     #endregion
-    
+
     [Space(20)]
 
     #region  Status Consts
@@ -33,7 +33,7 @@ public class ConstPlayerData : ScriptableObject
     #endregion
 
     [Space(20)]
-    
+
     public float Difficulty = 0f;
     [SerializeField] Color fromColor, toColor;
 }

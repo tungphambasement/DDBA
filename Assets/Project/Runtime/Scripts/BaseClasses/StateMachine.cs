@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class StateMachine<T> where T : State
 {
@@ -54,7 +52,7 @@ public class StateMachine<T> where T : State
             {
                 if (transition.Condition())
                 {
-                    if(transition.nextState != CurrentState) nextState = transition.nextState;
+                    if (transition.nextState != CurrentState) nextState = transition.nextState;
                     return;
                 }
             }

@@ -1,7 +1,3 @@
-using System.Data.Common;
-using UnityEngine;
-
-
 public class EnemyController : Controller
 {
 
@@ -22,6 +18,7 @@ public class EnemyController : Controller
     {
     }
 
-    public virtual void Start(){
+    public virtual void Start()
+    {
     }
 }

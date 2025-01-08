@@ -8,9 +8,9 @@ public class MeleeEntryState : MeleeBaseState
         animation_name = "IdleCombat";
         base.OnEnter();
         animationManager.RemoveAnim(0);
-        
+
         animationManager.AddAnim(0, animation_name);
-        duration = data.CombatCD;  
+        duration = data.CombatCD;
     }
 
     public override void OnHandle()

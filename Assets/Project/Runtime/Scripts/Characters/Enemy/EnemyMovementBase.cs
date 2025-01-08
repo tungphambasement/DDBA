@@ -1,8 +1,8 @@
 using UnityEngine;
 
 
-public class EnemyMovementBase : State 
-{  
+public class EnemyMovementBase : State
+{
     #region Default Enemy Variables
     protected float sqrDistance => data.sqrDistance;
     protected float duration;
@@ -12,10 +12,11 @@ public class EnemyMovementBase : State
     protected Vector3 movementDirection;
     protected Transform GFX;
     public float chaseDistanceThreshold;
-    public float movementSpeed; 
+    public float movementSpeed;
     #endregion
 
-    public EnemyMovementBase(EnemyData data){
+    public EnemyMovementBase(EnemyData data)
+    {
         this.data = data;
         animator = data.animator;
         chaseDistanceThreshold = data.chaseDistanceThreshold;
@@ -39,11 +40,15 @@ public class EnemyMovementBase : State
         base.OnExit();
     }
 
-    public void adjustFlipSprite(){
-        if(movementDirection.x < 0){
-            GFX.localScale = new Vector3(-1f,1f,1f);
-        }else{
-            GFX.localScale = new Vector3(1f,1f,1f);
+    public void adjustFlipSprite()
+    {
+        if (movementDirection.x < 0)
+        {
+            GFX.localScale = new Vector3(-1f, 1f, 1f);
+        }
+        else
+        {
+            GFX.localScale = new Vector3(1f, 1f, 1f);
         }
     }
 }

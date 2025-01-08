@@ -15,14 +15,15 @@ public class AirFinisherState : MeleeBaseState
         data.customGravity.gravityScale *= 2;
     }
 
-    private IEnumerator PlayAnimation(){
-        animationManager.AddAnim(3,animation_name);
+    private IEnumerator PlayAnimation()
+    {
+        animationManager.AddAnim(3, animation_name);
         yield return new WaitForSeconds(data.anims[animation_name].length);
-        animationManager.ForceAdd(3,animation_name+"Loop");
-        yield return new WaitUntil(()=>data.groundChecker.isGrounded());
+        animationManager.ForceAdd(3, animation_name + "Loop");
+        yield return new WaitUntil(() => data.groundChecker.isGrounded());
         //Debug.Log("Added " + animation_name + "End");
-        animationManager.ForceAdd(3,animation_name+"End"); 
-        yield return new WaitForSeconds(data.anims[animation_name+"End"].length);
+        animationManager.ForceAdd(3, animation_name + "End");
+        yield return new WaitForSeconds(data.anims[animation_name + "End"].length);
         animationManager.RemoveAnim(3);
     }
 
@@ -34,6 +35,6 @@ public class AirFinisherState : MeleeBaseState
     public override void OnExit()
     {
         base.OnExit();
-        data.customGravity.gravityScale /=2;
+        data.customGravity.gravityScale /= 2;
     }
 }

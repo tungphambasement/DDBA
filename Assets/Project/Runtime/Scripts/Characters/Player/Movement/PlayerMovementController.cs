@@ -27,8 +27,10 @@ public class PlayerMovementController : MonoBehaviour
     private PlayerBaseMovementState currentState => movementMachine.CurrentState;
     #endregion
 
-    private Vector2 playerPos{
-        get{
+    private Vector2 playerPos
+    {
+        get
+        {
             return rb.position + playerHitbox.offset;
         }
     }
@@ -59,7 +61,8 @@ public class PlayerMovementController : MonoBehaviour
         data.collisionListener.exitEvents += WallSlideExit;
     }
 
-    private void SetupMachine(){
+    private void SetupMachine()
+    {
         SetupStates();
         SetupStateBehavior();
         SetUpTransitions();
@@ -233,7 +236,7 @@ public class PlayerMovementController : MonoBehaviour
         {
             applySlide = false;
             data.canMove = true;
-            rb.velocity += new Vector2(0f,rememberVelocity.y);
+            rb.velocity += new Vector2(0f, rememberVelocity.y);
             rememberVelocity = Vector2.zero;
             data.isAccelGrav = true;
             data.customGravity.useGravity = true;
@@ -274,8 +277,8 @@ public class PlayerMovementController : MonoBehaviour
         RaycastHit2D[] upperHits = CastForward(data.ClimbUpper.position, distance),
         lowerHits = CastForward(data.ClimbLower.position, distance),
         midHits = CastForward(playerPos, distance - 0.2f),
-        topHits = CastForward(playerPos + new Vector2(0,playerHitbox.size.y/2), distance),
-        bottomHits = CastForward(playerPos + new Vector2(0,-playerHitbox.size.y/2), distance);
+        topHits = CastForward(playerPos + new Vector2(0, playerHitbox.size.y / 2), distance),
+        bottomHits = CastForward(playerPos + new Vector2(0, -playerHitbox.size.y / 2), distance);
 
         foreach (RaycastHit2D hit in upperHits)
         {
@@ -360,7 +363,8 @@ public class PlayerMovementController : MonoBehaviour
             {
                 Gizmos.DrawSphere(p, 0.1f);
             }
-            foreach(var x in rayToDraws){
+            foreach (var x in rayToDraws)
+            {
                 Gizmos.DrawRay(x);
             }
         }

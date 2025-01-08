@@ -41,11 +41,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DistortionAmount: 0.15
+    - _DistortionAmount: 0.068
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _RotationVelocity: -1.5
-    - _TwirlStrength: -5
+    - _RotationVelocity: -0.5
+    - _TwirlStrength: -6.29
     m_Colors: []
   m_BuildTextureStacks: []
 --- !u!114 &4209822322042619

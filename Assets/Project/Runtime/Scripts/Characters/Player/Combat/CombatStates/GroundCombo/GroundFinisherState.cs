@@ -9,9 +9,9 @@ public class GroundFinisherState : MeleeBaseState
         base.OnEnter();
         animationManager.AddAnim(3, animation_name);
         //Attack
-        duration = data.anims[animation_name].length/attackSpeed;
+        duration = data.anims[animation_name].length / attackSpeed;
         Debug.Log("Player Attack " + attackIndex + " Fired!");
-        rb.AddForce(data.movementInput*30, ForceMode2D.Impulse);
+        rb.AddForce(data.movementInput * 30, ForceMode2D.Impulse);
     }
 
     public override void OnHandle()

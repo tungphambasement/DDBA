@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Data.Common;
 using UnityEngine;
 
 public class ClimbingState : PlayerBaseMovementState
@@ -21,9 +19,10 @@ public class ClimbingState : PlayerBaseMovementState
         animationManager.ForceAdd(3, "WallCling");
         rb.velocity = Vector2.zero;
     }
-    private bool canClimb(){
-        if(data.movementInput.y > 0.1f && data.topHit) return true;
-        else if(data.movementInput.y < -0.1f && data.bottomHit) return true;
+    private bool canClimb()
+    {
+        if (data.movementInput.y > 0.1f && data.topHit) return true;
+        else if (data.movementInput.y < -0.1f && data.bottomHit) return true;
         return false;
     }
 
@@ -80,7 +79,7 @@ public class ClimbingState : PlayerBaseMovementState
         animationManager.ForceAdd(2, "AirFloatLoop");
         playerJump.ToggleJumpHang(1.5f);
         float AirMoveTime = Time.time;
-        yield return new WaitUntil(()=>(Time.time-AirMoveTime>data.jumpAirMoveTime+0.1f) || data.groundChecker.isGrounded() );
+        yield return new WaitUntil(() => (Time.time - AirMoveTime > data.jumpAirMoveTime + 0.1f) || data.groundChecker.isGrounded());
 
         //Unhang (Unhover)
         playerJump.ToggleJumpHang(1);

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using JetBrains.Annotations;
 using UnityEngine;
 
 public class MeleeBaseState : State
@@ -39,10 +38,10 @@ public class MeleeBaseState : State
         playerController = data.GetComponent<PlayerController>();
         HitEffectPrefab = data.Hiteffect;
         animationManager = data.animationManager;
-        
+
     }
 
-    
+
 
     public override void OnEnter()
     {
@@ -70,22 +69,25 @@ public class MeleeBaseState : State
         AttackPressedTimer = 1;
         if (animator.GetFloat("AttackWindow.Open") > 0f)
         {
-            if(!allowMove){
+            if (!allowMove)
+            {
                 allowMove = true;
             }
-            if(AttackPressedTimer > 0)
+            if (AttackPressedTimer > 0)
                 data.shouldCombo = true;
         }
     }
 
-    public virtual void OnCast_Start(){
+    public virtual void OnCast_Start()
+    {
 
     }
 
-    public virtual void OnCast_Released(){
+    public virtual void OnCast_Released()
+    {
 
     }
-    
+
     public override void OnExit()
     {
         base.OnExit();
@@ -98,7 +100,7 @@ public class MeleeBaseState : State
         //Debug.Log("Animator is " + animator == null);
         for (int i = 0; i < colliderToDamage.Count; i++)
         {
-            if(colliderToDamage[i].CompareTag("LivingBody"))
+            if (colliderToDamage[i].CompareTag("LivingBody"))
                 InflictDamage(colliderToDamage[i]);
         }
     }
@@ -106,7 +108,7 @@ public class MeleeBaseState : State
     public virtual void InflictDamage(Collider2D targetCollider)
     {
         Controller target = GameHandler.Instance.GetController(targetCollider);
-        if(target == null || targetDamaged.Contains(target)) return;
+        if (target == null || targetDamaged.Contains(target)) return;
         TeamComponent hitTeamComponent = target.teamComponent;
         if (hitTeamComponent && hitTeamComponent.teamIndex == TeamIndex.Enemy)
         {

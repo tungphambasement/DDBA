@@ -9,14 +9,14 @@ public class GroundEntryState : MeleeBaseState
         base.OnEnter();
         animationManager.AddAnim(3, animation_name);
         //Attack
-        duration = data.anims[animation_name].length/attackSpeed;
+        duration = data.anims[animation_name].length / attackSpeed;
         Debug.Log("Player Attack " + attackIndex + " Fired!");
     }
 
     public override void OnHandle()
     {
         base.OnHandle();
-        
+
     }
 
     public override void OnExit()

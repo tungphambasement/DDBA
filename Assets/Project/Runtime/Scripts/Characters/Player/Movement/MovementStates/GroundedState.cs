@@ -1,11 +1,10 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
 public class GroundedState : PlayerBaseMovementState
 {
     PlayerMove playerMove => data.playerMove;
-    PlayerJump  playerJump=> data.playerJump;
+    PlayerJump playerJump => data.playerJump;
     public override void Init(PlayerData data)
     {
         base.Init(data);
@@ -77,7 +76,7 @@ public class GroundedState : PlayerBaseMovementState
         animationManager.ForceAdd(2, "AirFloatLoop");
         playerJump.ToggleJumpHang(1.2f);
         float AirMoveTime = Time.time;
-        yield return new WaitUntil(()=>(Time.time-AirMoveTime>data.jumpAirMoveTime) || data.groundChecker.isGrounded() );
+        yield return new WaitUntil(() => (Time.time - AirMoveTime > data.jumpAirMoveTime) || data.groundChecker.isGrounded());
 
         //Unhang (Unhover)
         playerJump.ToggleJumpHang(1.2f);

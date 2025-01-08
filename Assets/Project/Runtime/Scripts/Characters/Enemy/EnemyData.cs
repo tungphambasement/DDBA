@@ -38,7 +38,8 @@ public class EnemyData : MonoBehaviour
         sqrDistance = directionToPlayer.sqrMagnitude;
     }
 
-    private void FixedUpdate(){
+    private void FixedUpdate()
+    {
         BaseUpdate();
     }
 

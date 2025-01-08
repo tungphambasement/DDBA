@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class CombatIdleState : MeleeBaseState
 {
     public override void OnEnter()

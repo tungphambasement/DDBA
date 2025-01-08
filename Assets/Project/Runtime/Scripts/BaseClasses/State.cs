@@ -1,8 +1,7 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class State 
+public abstract class State
 {
     public Action _behaviors;
 
@@ -29,7 +28,7 @@ public abstract class State
     public virtual void OnLateHandle()
     {
         latetime += Time.deltaTime;
-        
+
     }
 
     public virtual void OnExit()

@@ -1,7 +1,6 @@
-using UnityEngine;
 using System.Collections.Generic;
-using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 using System.Linq;
+using UnityEngine;
 
 public class AnimationManager : MonoBehaviour
 {
@@ -16,25 +15,29 @@ public class AnimationManager : MonoBehaviour
 
     public void AddAnim(int key, string animation_name)
     {
-        if (!anims.ContainsKey(key)){
+        if (!anims.ContainsKey(key))
+        {
             //Debug.Log("Added Key: "+  key + " " + animation_name);
             anims.Add(key, animation_name);
-            
+
         }
     }
-    
-    public void SafeRemove(int key, string animation_name){
-        if(isAnim(key,animation_name)) RemoveAnim(key);
+
+    public void SafeRemove(int key, string animation_name)
+    {
+        if (isAnim(key, animation_name)) RemoveAnim(key);
     }
 
-    public void ForceAdd(int key, string animation_name){
+    public void ForceAdd(int key, string animation_name)
+    {
         //if(!isAnim(key, animation_name)) Debug.Log("Forced " + animation_name);
         RemoveAnim(key);
-        AddAnim(key,animation_name);
+        AddAnim(key, animation_name);
     }
 
-    public bool isAnim(int key, string animation_name){
-        if(key > anims.Keys.Max()) return false;
+    public bool isAnim(int key, string animation_name)
+    {
+        if (key > anims.Keys.Max()) return false;
         return anims.ContainsKey(key) && anims[key] == animation_name;
     }
 
@@ -46,7 +49,7 @@ public class AnimationManager : MonoBehaviour
     private bool incorrectAnimation()
     {
         int last = anims.Count - 1;
-        if(anims.Count == 0) return false;
+        if (anims.Count == 0) return false;
         return anims.Values[last] != currentAnim;
     }
 
@@ -64,7 +67,8 @@ public class AnimationManager : MonoBehaviour
 
     public void RemoveAnim(int key)
     {
-        if(anims.ContainsKey(key)) {
+        if (anims.ContainsKey(key))
+        {
             //if(key == 2) Debug.Log("Removed at " + Time.timeAsDouble);
             anims.Remove(key);
         }

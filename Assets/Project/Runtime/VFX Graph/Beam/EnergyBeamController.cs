@@ -10,40 +10,41 @@ public class EnergyBeamController : MonoBehaviour
     public List<EnergyController> energyFXs;
 
     [field: SerializeField]
-    public VisualEffect ballFX {get; private set;}
+    public VisualEffect ballFX { get; private set; }
 
     [SerializeField]
     AnimationCurve DistortionGrowthAC;
 
-    [SerializeField]
-    private float maxChargeTime = 1.5f, maxBallSize = 0.8f, majorArcIni = 1.25f, minorArcIni = 0.75f;
-
     private float chargeTime = 0f, shootTime = 0f, timeStart;
-    
+
     private Action ToUpdate;
-    
-    private Coroutine shootRoutine; 
+
+    private Coroutine shootRoutine;
 
     public bool isActive = false;
 
-    public void StartCharge(){
-        if(ToUpdate != null || shootRoutine != null ) return; 
+    public void StartCharge()
+    {
+        if (ToUpdate != null || shootRoutine != null) return;
         chargeTime = 0f;
         isActive = true;
-        foreach(EnergyController ec in energyFXs){
+        foreach (EnergyController ec in energyFXs)
+        {
             ec.StartCharge();
         }
         ballFX.SendEvent("OnPlay");
         ballFX.SetBool("IsActive", true);
         ballFX.SetBool("Charging", true);
-        ballFX.SetBool("Shooting",false);
+        ballFX.SetBool("Shooting", false);
         ballFX.SetBool("Shoot", false);
         ToUpdate += ChargeUpdate;
         timeStart = (float)Time.timeAsDouble;
     }
 
-    public void StopCharge(){
-        foreach(EnergyController ec in energyFXs){
+    public void StopCharge()
+    {
+        foreach (EnergyController ec in energyFXs)
+        {
             ec.StopCharge();
         }
         ballFX.SetBool("Charging", false);
@@ -52,8 +53,10 @@ public class EnergyBeamController : MonoBehaviour
         isActive = false;
     }
 
-    public void Shoot(){
-        foreach(EnergyController ec in energyFXs){
+    public void Shoot()
+    {
+        foreach (EnergyController ec in energyFXs)
+        {
             ec.Shoot();
         }
         ballFX.SetBool("IsActive", true);
@@ -61,26 +64,26 @@ public class EnergyBeamController : MonoBehaviour
         isActive = true;
     }
 
-    private void ChargeUpdate(){
+    private void ChargeUpdate()
+    {
         chargeTime += Time.deltaTime;
-        /*if(chargeTime >= maxChargeTime){
-            StopCharge();
-        }*/
     }
 
-    void Update(){
+    void Update()
+    {
         ToUpdate?.Invoke();
     }
 
-    private IEnumerator ShootCoroutine(){
+    private IEnumerator ShootCoroutine()
+    {
         Debug.Log(chargeTime);
         //yield return new WaitForSeconds(Mathf.Max(0.7f-(chargeTime-1.5f),0f));
-        ballFX.SetFloat("ShootTime", (float) Time.timeAsDouble - timeStart);
-        ballFX.SetBool("Shoot",true);
+        ballFX.SetFloat("ShootTime", (float)Time.timeAsDouble - timeStart);
+        ballFX.SetBool("Shoot", true);
         yield return new WaitForSeconds(0.075f);
         ballFX.SetBool("Shooting", true);
         yield return new WaitForSeconds(0.075f);
-        ballFX.SetBool("Shoot",false);
+        ballFX.SetBool("Shoot", false);
         yield return new WaitForSeconds(2f);
         ballFX.SendEvent("OnStop");
         isActive = false;

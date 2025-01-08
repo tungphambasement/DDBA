@@ -1,13 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.Tilemaps;
 
 public class MapManager : MonoBehaviour
 {
-    [SerializeField] 
+    [SerializeField]
     private Tilemap map;
 
     [SerializeField]
@@ -16,7 +13,7 @@ public class MapManager : MonoBehaviour
     [SerializeField] private float minDis, maxDis;
 
 
-    private Dictionary<TileBase,TileData> dataFromTiles; 
+    private Dictionary<TileBase, TileData> dataFromTiles;
 
     /*EnemySpawner slimeSpawner;
 

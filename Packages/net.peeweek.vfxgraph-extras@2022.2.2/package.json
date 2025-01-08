@@ -1,0 +1,35 @@
+{
+  "name": "net.peeweek.vfxgraph-extras",
+  "displayName": "Visual Effect Graph (Extras)",
+  "version": "2022.2.2",
+  "unity": "2022.2",
+  "dependencies": {
+    "com.unity.visualeffectgraph": "14.0.0",
+    "com.unity.shadergraph": "14.0.0"
+  },
+  "description": "Visual Effect Graph Extras - Extensions and Additions to VFX Graph, not endorsed nor supported by Unity.",
+  "keywords": [
+    "Visual",
+    "Effect",
+    "Graph",
+    "VFX",
+    "VFXGraph",
+    "Extras",
+    "VisualEffect"
+  ],
+  "hideInEditor": false,
+  "author": {
+    "name": "PeeWeeK.NET",
+    "url": "https://github.com/peeweek/"
+  },
+  "samples": [
+    {
+      "displayName": "VFX Virtual Impact Example",
+      "description": "Test Implementation for VFX Virtual Impacts",
+      "path": "Samples~/VirtualImpactTest"
+    }
+  ],
+  "publishConfig": {
+    "registry": "https://package.openupm.com"
+  }
+}

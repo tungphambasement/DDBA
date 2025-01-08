@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class AirEntryState : MeleeBaseState
 {
@@ -12,7 +9,7 @@ public class AirEntryState : MeleeBaseState
         base.OnEnter();
         animationManager.AddAnim(3, animation_name);
         //Attack
-        duration = data.anims[animation_name].length/attackSpeed;
+        duration = data.anims[animation_name].length / attackSpeed;
         Debug.Log("Player Air Attack " + attackIndex + " Fired!");
     }
 
@@ -20,7 +17,7 @@ public class AirEntryState : MeleeBaseState
     {
         base.OnHandle();
 
-        rb.AddForce(new Vector3(0f,8f),ForceMode2D.Force);
+        rb.AddForce(new Vector3(0f, 8f), ForceMode2D.Force);
     }
 
     public override void OnExit()

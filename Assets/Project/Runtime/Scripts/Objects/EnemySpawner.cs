@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
@@ -21,20 +17,22 @@ public class EnemySpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!canSpawn) return;
+        if (!canSpawn) return;
         elapsed += Time.deltaTime;
-        if(elapsed > spawnRate){
+        if (elapsed > spawnRate)
+        {
             elapsed = 0;
             Transform positionToSpawn = this.transform;
-            Vector2 originPos = positionToSpawn.position;    
-            foreach(GameObject monsters in enemyPrefabs){
+            Vector2 originPos = positionToSpawn.position;
+            foreach (GameObject monsters in enemyPrefabs)
+            {
                 Transform new_positionToSpawn = new GameObject().transform;
                 new_positionToSpawn.position = new Vector2(
-                    originPos.x+Random.Range(-guardingRange,guardingRange),
-                    originPos.y+Random.Range(-guardingRange,guardingRange)
+                    originPos.x + Random.Range(-guardingRange, guardingRange),
+                    originPos.y + Random.Range(-guardingRange, guardingRange)
                     );
-                Instantiate(monsters,new_positionToSpawn);
+                Instantiate(monsters, new_positionToSpawn);
             }
         }
     }
-}   
+}
